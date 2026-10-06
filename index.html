@@ -1,0 +1,2102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recuperação 3º bimestre · A Tela que Desliga o Saber</title>
+<style>
+:root{
+  --tinta:#16211C; --papel:#F5F8F6; --card:#FFFFFF; --linha:#C8D4CE;
+  --faixa:#14181A; --faixa2:#2A3236;
+  --roxo:#B9A8D8; --roxof:#F4F0FA;
+  --verde:#A8CBA0; --verdef:#EFF7ED;
+  --azul:#A3C2DE;  --azulf:#EEF4FA;
+  --laranja:#E0BE95; --laranjaf:#FBF3EA;
+  --rosa:#D9AFC9; --rosaf:#FAEFF6;
+  --FAIXA_W:78px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--papel);color:var(--tinta);
+  font:17px/1.62 -apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  padding:0 0 108px}
+
+/* ───── topo ───── */
+#topo{position:sticky;top:0;z-index:40;background:var(--tinta);color:#fff;
+  padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#topo .tt{font-size:18px;font-weight:700}
+#topo .ver{margin-left:auto;font-size:14px;opacity:.85}
+#topo .eu{font-size:14px;opacity:.9;width:100%}
+
+/* ───── palco + faixa ───── */
+#area{position:relative;max-width:1000px;margin:0 auto;padding:14px 14px 0}
+#palco{padding-right:calc(var(--FAIXA_W) + 22px);position:relative}
+#faixa{position:absolute;top:0;right:14px;width:var(--FAIXA_W);min-height:100%;
+  background:linear-gradient(180deg,var(--faixa2),var(--faixa) 22%,var(--faixa) 78%,var(--faixa2));
+  border-radius:16px;padding:10px 4px}
+#faixa .vazio{color:#6D7A80;font-size:13px;text-align:center;line-height:1.3;margin:6px 0 0}
+#fios{position:absolute;inset:0;pointer-events:none;z-index:5}
+
+/* ───── cartões ───── */
+.card{background:var(--card);border:4px solid var(--linha);border-radius:18px;
+  padding:14px 16px 16px;margin:0 0 14px}
+.bloco{border:4px solid;border-radius:17px;padding:13px 15px 15px;margin:0 0 14px}
+.bl1{border-color:var(--roxo);background:var(--roxof)}
+.bl2{border-color:var(--verde);background:var(--verdef)}
+.bl3{border-color:var(--azul);background:var(--azulf)}
+.bl4{border-color:var(--laranja);background:var(--laranjaf)}
+.bl5{border-color:var(--rosa);background:var(--rosaf)}
+h2{margin:0 0 6px;font-size:21px;line-height:1.3;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.cnum{display:inline-flex;align-items:center;justify-content:center;min-width:31px;height:31px;
+  border-radius:50%;background:var(--tinta);color:#fff;font-size:16px;font-weight:700;padding:0 7px;flex:none}
+.sub{font-size:15px;opacity:.85;margin:0 0 11px}
+
+/* ───── botões ───── */
+.bts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:11px}
+.esc{position:relative;text-align:left;background:#fff;border:4px solid var(--linha);
+  border-radius:15px;padding:12px 13px 12px 15px;cursor:pointer;font:inherit;color:inherit;display:block;width:100%}
+.esc.on{border-color:var(--tinta);background:#F0F5F2}
+.esc .tick{position:absolute;top:9px;right:11px;font-size:20px;line-height:1}
+.esc .cnum{margin:0 0 6px}
+.esc b{display:block;font-size:17px;margin:2px 0 0}
+.esc .d{display:block;font-size:14px;opacity:.82;margin:3px 0 0}
+.turmas{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:10px}
+.turmas .esc{text-align:center;padding:14px 8px}
+.turmas .esc b{font-size:21px}
+input[type=text],input[type=number]{width:100%;font:inherit;padding:12px 13px;
+  border:4px solid var(--linha);border-radius:15px;background:#fff;color:inherit}
+
+/* ───── a leitura ───── */
+.par{position:relative;margin:0 0 16px;padding:11px 13px;border:4px solid transparent;border-radius:15px}
+.par.estr{border-color:var(--linha);background:#fff}
+/* 🔴 CLD-036 · os 2 cards do parágrafo (Marcos, 02/10 01:37 e 01:43): cabeçalho na cor da etapa, texto em branco */
+.par.estr{border:0 !important;background:transparent !important;padding:0 !important}
+.par.estr .parcab{border:4px solid var(--pc);background:var(--pbg);border-radius:15px 15px 0 0;padding:10px 13px;margin:0 !important}
+.par.estr .parcab .pn{background:var(--pc) !important;color:#fff !important}
+.par.estr .parcab .rot{color:var(--pc);font-weight:900}
+.par.estr .parcab .dz{color:#2B2B2B;opacity:1}
+.par.estr .tx{border:4px solid var(--pc);border-top:0;background:#fff;border-radius:0 0 15px 15px;padding:8px 13px}
+.parcab{display:none;align-items:center;gap:9px;margin:0 0 7px;flex-wrap:wrap}
+.par.estr .parcab{display:flex}
+.parcab .pn{display:inline-flex;align-items:center;justify-content:center;width:29px;height:29px;
+  border-radius:50%;background:var(--tinta);color:#fff;font-size:15px;font-weight:700;flex:none}
+.parcab .rot{font-size:15px;font-weight:700}
+.parcab .dz{font-size:14px;opacity:.8;width:100%;margin:0 0 0 38px}
+.tx{font-size:17px;line-height:1.75;text-align:justify}
+
+mark.mk{background:transparent;color:inherit;padding:1px 2px;border-radius:5px;cursor:pointer;
+  border-bottom:4px solid transparent;transition:background .12s}
+mark.mk.on{border-bottom-style:solid}
+mark.mk.on:hover{filter:brightness(.97)}
+mark.mk .pin{display:none}
+mark.mk.on .pin{display:inline-block;font-size:20px;line-height:1;vertical-align:-2px;margin:0 0 0 3px}
+mark.gr{background:#FFF3B0;box-shadow:0 0 0 2px #FFF3B0}
+
+/* ───── selos na faixa ───── */
+.selo{position:absolute;right:5px;width:68px;background:#fff;border:4px solid #fff;border-radius:13px;
+  text-align:center;padding:4px 1px 3px;cursor:pointer;z-index:6}
+.selo .e{display:block;font-size:22px;line-height:1.15}
+.selo .p{display:block;font-size:11.5px;line-height:1.15;font-weight:700;margin:1px 0 0;
+  word-break:break-word;hyphens:auto}
+.selo .st{position:absolute;top:-9px;left:-9px;width:23px;height:23px;border-radius:50%;
+  background:var(--faixa);border:3px solid #fff;font-size:12px;line-height:17px}
+.selo.eco{opacity:.28}
+
+/* ───── janela ───── */
+.jan{position:fixed;inset:0;background:rgba(8,12,10,.62);z-index:90;display:flex;
+  align-items:flex-end;justify-content:center;padding:14px}
+.jancx{background:#fff;border:4px solid var(--tinta);border-radius:20px;padding:16px;
+  width:100%;max-width:560px;max-height:84vh;overflow:auto}
+.jantt{font-size:20px;font-weight:700;display:flex;align-items:center;gap:9px;margin:0 0 4px}
+.jantt .e{font-size:27px}
+.jancit{border-left:8px solid var(--linha);padding:7px 0 7px 12px;margin:11px 0;font-size:16px;font-style:italic}
+.janl{display:flex;gap:9px;align-items:flex-start;margin:9px 0;font-size:16px}
+.janl .e{font-size:22px;line-height:1.2;flex:none}
+.fechar{margin:13px 0 0;width:100%;border:4px solid var(--tinta);background:var(--tinta);color:#fff;
+  border-radius:15px;padding:13px;font:700 17px/1 inherit;cursor:pointer}
+
+/* ───── rodapé ───── */
+#rod{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--tinta);
+  padding:9px 12px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+#rod button{border:4px solid #fff;background:transparent;color:#fff;border-radius:14px;
+  padding:11px 13px;font:700 16px/1 inherit;cursor:pointer}
+#rod button:disabled{opacity:.38;cursor:default}
+/* 🔴 CLD-052 · o Próximo roxo (CLD-043 P.1). Antiga: #rod .pr{background:#fff;color:var(--tinta);margin-left:auto} */
+#rod .pr{background:#6A1B9A;color:#fff;border-color:#fff;margin-left:auto;box-shadow:0 0 0 3px #CE93D8}
+#rod .pr:disabled{background:#6A1B9A}
+/* 🔴 CLD-052 · a tela do texto em CAMADAS: o card que diz o que entrou nesta tela */
+.camcard{background:#fff;border:4px solid #6A1B9A;border-radius:16px;padding:12px 14px;margin:0 0 14px}
+.camcard .camtt{font-size:19px;font-weight:900;color:#4A148C;margin-bottom:6px}
+.camcard .camln{font-size:17px;margin:5px 0;line-height:1.35}
+.camcard .camln.novo{font-weight:900;color:#1B5E20}
+.camcard .camln.ja{color:#455A64}
+.camtrilha{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 0}
+.camtrilha span{border:3px solid #CE93D8;border-radius:10px;padding:3px 9px;font-weight:800;font-size:15px;color:#6A1B9A;background:#F3E5F5}
+.camtrilha span.on{background:#6A1B9A;color:#fff;border-color:#4A148C}
+
+/* ───── perguntas ───── */
+.alts{display:block}
+.alt{display:block;width:100%;text-align:left;background:#fff;border:4px solid var(--linha);
+  border-radius:15px;padding:12px 14px;margin:0 0 11px;cursor:pointer;font:inherit;color:inherit}
+.alt .L{font-weight:700;margin:0 8px 0 0}
+.alt.sel{border-color:var(--tinta)}
+.gol{width:80%;border:4px solid;border-radius:15px;padding:10px 12px;margin:0 0 11px}
+.gol .cab{font-size:17px;font-weight:700;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.gol .cab .tri{font-size:25px;letter-spacing:2px}
+.gol .j{font-size:15.5px;margin:5px 0 0}
+.g-gol{border-color:#2E7D32;background:#E8F5E9}
+.g-imp{border-color:#EF6C00;background:#FFF3E0}
+.g-trave{border-color:#F9A825;background:#FFFDE7}
+.g-fora{border-color:#5C6BC0;background:#E8EAF6}
+.g-contra{border-color:#C62828;background:#FFEBEE}
+.dica{width:80%;border:4px solid var(--laranja);background:var(--laranjaf);
+  border-radius:15px;padding:10px 12px;margin:0 0 12px;font-size:15.5px}
+
+/* ───── sumário ───── */
+.sumjan{position:fixed;inset:0;background:rgba(8,12,10,.62);z-index:95;display:flex;
+  align-items:flex-end;justify-content:center;padding:12px}
+.sumcx{background:#fff;border:4px solid var(--tinta);border-radius:20px;padding:15px;
+  width:100%;max-width:560px;max-height:84vh;overflow:auto}
+.sumtt{font-size:20px;font-weight:700}
+.sumsb{font-size:14px;opacity:.8;margin:0 0 10px}
+.sumparte{font-size:16px;font-weight:700;background:var(--tinta);color:#fff;
+  border-radius:11px;padding:7px 11px;margin:12px 0 8px}
+.suml{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#fff;
+  border:4px solid var(--linha);border-radius:14px;padding:9px 11px;margin:0 0 8px;cursor:pointer;font:inherit;color:inherit}
+.suml .sumn{display:inline-flex;align-items:center;justify-content:center;width:31px;height:31px;
+  border-radius:9px;background:#EDF2EF;font-weight:700;font-size:15px;flex:none}
+.suml .sumst{font-size:20px;flex:none}
+.suml .sumtx b{display:block;font-size:16px}
+.suml .sumtx span{display:block;font-size:14px;opacity:.8}
+.suml.aqui{border-color:var(--tinta)}
+.suml.trav{opacity:.55;cursor:default}
+
+.nota{border:4px solid var(--tinta);border-radius:15px;background:#fff;padding:11px 13px;font-size:16px}
+.leg{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:9px}
+.legi{display:flex;align-items:center;gap:9px;background:#fff;border:4px solid var(--linha);
+  border-radius:14px;padding:9px 11px}
+.legi .e{font-size:24px;flex:none}
+.legi b{display:block;font-size:15.5px}
+.legi span{display:block;font-size:13.5px;opacity:.8}
+
+/* ══════════════════════════════════════════════════════════════════
+   🔴 CLD-011 · PADRONIZADOR_002 · A FORMA PASSA A SER A DA BASE
+   Regra da base única (CMD-21): a base viva é a RETOMADA 2ª AAIM V09.80. Cada valor
+   abaixo foi LIDO no DOM do arquivo 26.09.30_C464_REV_2AAIM-U02_9ano_..._ESTUDANTE.html,
+   não escolhido aqui. As regras antigas deste arquivo ficam acima, sobrepostas — nada apagado.
+   ══════════════════════════════════════════════════════════════════ */
+#topo{display:none}  /* DESATIVADO CLD-011 · o topo virou #statusbar + #idbar, cópia da base */
+#statusbar{position:sticky;top:0;z-index:75;background:#fff;padding:6px 12px;display:flex;gap:6px;
+  flex-wrap:wrap;row-gap:5px;border-bottom:3px solid #6B4B9C;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.chip{font-size:16px;font-weight:800;padding:3px 10px;border-radius:14px;background:#EEF4F2;color:#6E6E6E;
+  max-width:46ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip.ver{background:#6B4B9C;color:#fff}
+.chip.tela{background:#2E6029;color:#fff}
+.chip.etapa{background:#EEF4F2;color:#4A5C64;border:2px solid #D3DEDB}
+.chip.nota{color:#B3001B}
+.chip.tcbtn{background:#FFFFFF;color:#1B5E20;border:3px solid #2E7D32;cursor:pointer;font-family:inherit}
+.chip.sai{background:#FDECEA;color:#B71C1C;border:3px solid #E57373}
+#cronoBox{background:#17242B;color:#fff;border-radius:16px;padding:4px 13px;font-weight:800;letter-spacing:1px;font-size:16px}
+#statusbar .espaco{flex:1 1 100%;height:0}
+#idbar{background:#fff;border-bottom:4px solid #6B4B9C;padding:8px 14px;box-shadow:0 3px 12px rgba(0,0,0,.25)}
+#idbar .l1{font-size:16px;font-weight:800;color:#6B4B9C;line-height:1.15}
+#idbar .l2{font-size:16px;font-weight:900;color:#2E6029;line-height:1.15}
+#idbar .l2 .unid{color:#7B2D8E;letter-spacing:1px}
+#idbar .l3{font-size:16px;color:#6E6E6E;line-height:1.15}
+.em20{font-size:max(20px,1em);line-height:1;vertical-align:-2px;display:inline-block;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla",sans-serif}
+
+/* identificação · .secab .campo .subn .obr .turmabtn #inNum · copiados da base */
+.secab{background:var(--csbg,#F7F3FB);border:3px solid var(--cs,#7B2D8E);border-top-width:8px;
+  border-radius:16px;padding:20px 22px;margin-bottom:16px}
+.secab>.sect{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:900;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--cs,#7B2D8E);margin-bottom:12px;line-height:1.15}
+.secab>.sect .secn{flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:var(--cs,#7B2D8E);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;letter-spacing:0;
+  box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.campo{margin-bottom:14px}
+.campo label{display:flex;align-items:center;font-size:16px;font-weight:800;color:#6E6E6E;margin-bottom:5px}
+.subn{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:32px;height:32px;
+  border-radius:50%;margin-right:9px;background:var(--cs2,#0C7064);color:#fff;font-size:16px;font-weight:900;
+  box-shadow:0 1px 4px rgba(0,0,0,.14)}
+.obr{color:#C62828;font-size:22px;font-weight:900;line-height:1;margin-left:6px}
+.dicanome{font-size:16px;color:#4A5C66;margin:-2px 0 7px;line-height:1.4}
+.campo input{width:100%;padding:13px;border:3px solid #8FA3B5;border-radius:12px;font-size:17px;font-family:inherit}
+.campo input#inNum{width:118px;text-align:center;font-size:20px;font-weight:900}
+.turmagrid{display:flex;gap:8px;flex-wrap:wrap}
+.turmabtn{min-width:74px;padding:11px 14px;border:3px solid;border-radius:12px;font-size:17px;font-weight:900;
+  cursor:pointer;font-family:inherit}
+
+/* o tique · quadrado no canto, verde quando marcado · cópia do .m7autick do mapa da base */
+.esc .tick{position:absolute;top:10px;right:10px;width:34px;height:34px;border:3px solid #78909C;
+  border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:900;line-height:1;color:#fff}
+.esc.on .tick{background:#2E7D32;border-color:#1B5E20;color:#fff}
+
+/* a faixa vazia não pode sumir no escuro · amarelo #FFD34E, o mesmo destaque da base */
+#faixa .vazio{color:#FFD34E;font-weight:900;font-size:16px;opacity:1}
+
+/* 🔴 a entrelinha · o fio passa no VÃO entre as linhas, não por cima das palavras */
+.tx{line-height:2.35}
+.selo .st{width:30px;height:30px;top:-12px;left:-12px;font-size:20px;line-height:24px}
+
+/* o gênero em destaque, ligado à faixa por fio */
+.gen{display:inline-flex;align-items:center;gap:6px;background:#6B4B9C;color:#fff;font-weight:900;
+  border-radius:14px;padding:3px 12px;font-size:16px;cursor:pointer;border:3px solid #4A2C7D}
+/* o card do parágrafo abre a explicação de como ele se constrói */
+.parcab .como{margin-left:auto;border:3px solid var(--tinta);background:#fff;border-radius:12px;
+  padding:3px 10px;font-family:inherit;font-weight:800;font-size:15px;line-height:1.2;cursor:pointer}
+.par.estr .parcab{cursor:pointer}
+/* o ❓ vermelho antes da frase · a frase é a resposta */
+.qk{display:inline-block;font-size:20px;line-height:1;cursor:pointer;margin:0 4px 0 0;vertical-align:-2px;
+  border:3px solid #C62828;border-radius:8px;padding:1px 2px;background:#FDEDED}
+.chave{display:inline-block;background:#C62828;color:#fff;font-weight:900;border-radius:9px;padding:2px 9px;font-size:15px;margin-right:6px}
+.cumpre{display:flex;gap:9px;align-items:flex-start;margin:8px 0;font-size:16px}
+
+/* 🔴 CLD-011 · a tela da pergunta · .croxo .cp-cmd .conector .altletra copiados da base;
+   a zona da letra com fundo próprio e separador é pedido do Marcos (01/10 05:57) e ainda
+   precisa SUBIR para a base RETOMADA, na mão, quando o build dela voltar a rodar. */
+.croxo{border:3px solid #B83D3D;border-left:9px solid #B83D3D;background:#FDF1F3;border-radius:14px;padding:16px 18px;margin-bottom:12px}
+.cp-cmd{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:800;color:#8E1B2B;letter-spacing:.4px;
+  text-transform:uppercase;margin-bottom:9px}
+.ctxnum{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;
+  background:#6B4B9C;color:#fff;font-size:17px;font-weight:900;flex:none;border:3px solid #4A2C7D}
+.qbox{background:#fff;border:3px solid #8E1B2B;border-radius:12px;padding:12px 16px}
+.qlab{font-size:15px;font-weight:900;color:#B83D3D;letter-spacing:1px;margin-bottom:4px}
+.qbox h3{margin:0;font-size:20px;line-height:1.5;color:#22303A}
+.conector{margin-top:10px;font-size:17px;font-weight:800;color:#7A2230;border-top:2px dashed #E0A9B2;padding-top:9px}
+mark.grq{background:#FFF3B0;box-shadow:0 0 0 2px #FFF3B0;color:inherit;border-radius:4px}
+.tchip{display:inline;background:#EAF3FB;border-bottom:3px solid #2E5C8A;color:#1B4A7A;font-weight:800;
+  padding:0 3px;border-radius:5px 5px 0 0;cursor:pointer}
+.tchip.lido{background:#E3F5DE;border-bottom-color:#3E8C2E;color:#1B6B08}
+/* 🔴 CLD-035 · Marcos, 02/10 01:42: "tela 3 · não consegui ler: quase o mesmo tom do fundo". Era cinza #4A5C66 direto
+   sobre o fundo verde-escuro da questão. Antiga, desativada: .glosaviso{font-size:16px;color:#4A5C66;margin:0 0 12px} */
+.glosaviso{font-size:16px;color:#1E2A36;margin:0 0 12px;background:#fff;border:4px solid #2E5C8A;border-radius:12px;padding:8px 12px}
+.glosaviso b{color:#1A4F80}
+.alt.alt2{display:flex;align-items:stretch;padding:0;overflow:hidden;background:#F4F8FC;border:3px solid #C3D6E8;
+  border-radius:14px;font-size:17px;line-height:1.45}
+.alt2 .altl{flex:none;display:flex;align-items:center;padding:10px 12px;background:#DCE7F2;border-right:3px solid #C3D6E8}
+.alt2 .altletra{width:38px;height:38px;border-radius:11px;background:#2E5C8A;color:#fff;font-size:20px;font-weight:900;
+  display:flex;align-items:center;justify-content:center}
+.alt2 .frase{flex:1;padding:13px 16px}
+.alt2.sel{outline:5px solid #7B2D8E;outline-offset:2px}
+.alt2.certo .altletra{background:#2E7D32} .alt2.certo{border-color:#2E7D32}
+.alt2.errado .altletra{background:#C62828} .alt2.errado{border-color:#C62828}
+.chip.notac{color:#B3001B}
+
+/* ══ 🔴 CLD-013 · o fundo por tipo de tela e os emojis da lateral · copiados da base ══ */
+body.m7f-tema,body.m7f-vf,body.m7f-lac,body.m7f-disc,body.m7f-placar,body.m7f-final{background-attachment:fixed;
+ background-image:linear-gradient(180deg,rgba(255,255,255,.26) 0%,rgba(255,255,255,.06) 42%,rgba(0,0,0,.20) 100%),
+ linear-gradient(135deg,var(--f1) 0%,var(--f2) 34%,var(--f3) 68%,var(--f2) 100%)}
+body.m7f-tema{--f1:#3FA34D;--f2:#14532D;--f3:#0A3A1C}
+body.m7f-vf{--f1:#3ECFC0;--f2:#0E7490;--f3:#083E4E}
+/* amarelo da LACUNA · tipo novo, pedido do Marcos em 01/10 06:25 · cores do amarelo que a base já usa */
+body.m7f-lac{--f1:#FFD166;--f2:#E0A22B;--f3:#8A4E04}
+body.m7f-disc{--f1:#5A6672;--f2:#2A323B;--f3:#0E1216}
+body.m7f-placar{--f1:#E0A22B;--f2:#C2760C;--f3:#8A4E04}
+body.m7f-final{--f1:#9A6614;--f2:#5C3A00;--f3:#2E1C00}
+.m7cena{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.m7cl{position:absolute;top:0;bottom:0;width:min(190px,14vw)}
+.m7cl.esq{left:0} .m7cl.dir{right:0}
+.m7ce{position:absolute;bottom:-14vh;left:var(--x);font-size:34px;line-height:1;opacity:.5;
+  animation:m7sobe var(--d) linear var(--a) infinite;will-change:transform}
+.m7cl.dir .m7ce{left:auto;right:var(--x)}
+.m7cena[data-tend="desce"] .m7ce{bottom:auto;top:-14vh;animation-name:m7desce}
+@keyframes m7desce{0%{transform:translateY(0) rotate(0);opacity:0}8%{opacity:.5}92%{opacity:.5}100%{transform:translateY(124vh) rotate(-18deg);opacity:0}}
+@keyframes m7sobe{0%{transform:translateY(0) rotate(0);opacity:0}8%{opacity:.5}92%{opacity:.5}100%{transform:translateY(-124vh) rotate(18deg);opacity:0}}
+@media (max-width:820px){ .m7cena{display:none} }
+@media (prefers-reduced-motion:reduce){ .m7ce{animation:none;opacity:.30} }
+#area{position:relative;z-index:2}
+/* as pastilhas da NAV e do tipo */
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.navpill{display:inline-flex;align-items:center;gap:5px;background:#22303A;color:#fff;border-radius:12px;padding:3px 10px;font-weight:900;font-size:15px}
+.navpill.tipo{background:#fff;color:#22303A;border:3px solid #22303A}
+.discab{background:#17242B;color:#FFD34E;border-radius:14px;padding:10px 14px;margin:0 0 12px;font-weight:900;font-size:16px;border:3px solid #000}
+.qprova{font-size:17px;font-weight:700;color:#37474F;line-height:1.5}
+/* o texto puro */
+.txpuro{background:#fff;border:3px solid #8FA3B5;border-radius:14px;margin:0 0 12px;overflow:hidden}
+.txbt{display:block;width:100%;text-align:left;background:#EEF4F2;border:0;border-bottom:3px solid #8FA3B5;padding:10px 14px;font-family:inherit;font-weight:900;font-size:16px;line-height:1.2;cursor:pointer;color:#22303A}
+.txcx{max-height:300px;overflow:auto;padding:10px 14px;font-size:16px;line-height:1.7}
+.txcx p{margin:0 0 10px;text-align:justify}
+.txn{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#22303A;color:#fff;font-size:14px}
+/* a confirmação */
+.confbx{background:#fff;border:3px solid #22303A;border-radius:14px;padding:12px;margin:6px 0 12px}
+.contasel{font-weight:900;color:#4527A0;margin:0 0 8px;font-size:17px}
+.btconf{width:100%;border:3px solid #1B5E20;background:#2E7D32;color:#fff;border-radius:12px;padding:12px;font-family:inherit;font-weight:900;font-size:17px;line-height:1;cursor:pointer}
+.btconf:disabled{background:#B0BEC5;border-color:#90A4AE;cursor:default}
+.confok{background:#E8F5E9;border:3px solid #2E7D32;border-radius:14px;padding:10px 12px;margin:6px 0 12px;font-weight:800;color:#1B5E20}
+.modelo{background:#FFF8E1;border:3px solid #C79A18;border-radius:14px;padding:12px 14px;margin:12px 0}
+.modelo p{margin:6px 0 0;font-size:17px;line-height:1.6}
+.cumpre.pulsa{animation:m7pulsa 1.2s ease-in-out infinite}
+@keyframes m7pulsa{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+.sumob{display:block;width:100%;text-align:left;border:0;cursor:pointer}
+</style>
+<style>
+/* 🔴 CLD-150 · R.30 · 1 frase por linha */
+#palco .etln{display:block;margin:0 0 4px}
+#palco .etln:last-child{margin-bottom:0}
+
+
+/* 🔴 CLD-031 · número de comando: dois dígitos, negrito e grifado ("Escolha 03") */
+.m7n{font-weight:900;background:#FFE680;color:#3B2A00;border-radius:5px;padding:0 4px;font-variant-numeric:tabular-nums}
+
+/* 🔴 CLD-157 · o sumário da PORT no mesmo desenho do sumário das RETOMADAS (Marcos 20:29: "por que encheu de preto?")
+   As faixas pretas (.sumparte em var(--tinta)) viram cards claros com borda roxa, emoji e seta, como os lotes da RETOMADA. */
+.sumcx{border-color:#6A1B9A !important;max-width:640px !important}
+.sumtt{color:#2E6029 !important;font-weight:900 !important}
+.sumparte{display:flex !important;align-items:center;gap:10px;background:#F3ECF9 !important;color:#263238 !important;
+  border:3px solid #6A1B9A !important;border-radius:12px !important;padding:10px 12px !important;font-size:16px !important;font-weight:900 !important}
+.sumparte .sem{font-size:22px;line-height:1}
+.sumparte .sseta{color:#6A1B9A;font-size:14px;min-width:14px}
+.sumob{cursor:pointer;width:100% !important;text-align:left}
+.sumob.ab{background:#EADCF4 !important;border-width:4px !important}
+.sumcx .fechar{background:#fff !important;color:#4A148C !important;border:3px solid #6A1B9A !important;border-radius:12px !important;font-weight:900 !important}
+.sumcx .sumsb .etln{display:block}
+.suml.aqui{border-color:#6A1B9A !important;background:#FBF8FD !important}
+
+/* 🔴 CLD-228 · 👨‍🏫 sair vermelho no topo (o mesmo da REVISÃO SAAIB) */
+.m7profsai{position:fixed;top:10px;right:10px;z-index:6000;display:flex;flex-direction:column;align-items:center;gap:2px;
+  background:linear-gradient(180deg,#E53935,#B71C1C);border:4px solid #7F0000;border-radius:14px;padding:6px 10px;cursor:pointer;
+  font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.m7profsai .em{font-size:30px;line-height:1}
+.m7profsai .tx{font-size:14px;font-weight:900;color:#FFFFFF}
+.m7profsai .tx2{font-size:11px;font-weight:800;color:#FFE0E0}
+body.m7comsair4 #statusbar{padding-right:92px!important}
+
+</style>
+</head>
+<body>
+
+<div id="topo">
+  <span class="tt">📘 Recuperação · 3º bimestre</span>
+  <span class="ver" id="vver">V00.00</span>
+  <span class="eu" id="eu"></span>
+</div>
+<!-- 🔴 CLD-011 · o topo da base: barra fixa de pastilhas + a barra de identificação -->
+<div id="statusbar">
+  <span class="chip ver" id="stVer">V00.00</span>
+  <span class="chip" id="stNome">Estudante: —</span>
+  <span class="chip" id="stTurma">Turma: —</span>
+  <span class="chip tela" id="stTela">Tela 1</span>
+  <span class="chip etapa" id="stEtapa">identificação</span>
+  <span class="chip notac" id="stNota"><span class="em20">✔</span> 0 de 7</span>
+  <span class="espaco"></span>
+  <span class="chip" id="stHora">🕐 --:--</span>
+  <span id="cronoBox">00:00</span>
+  <!-- 🔴 CLD-073 · Marcos, 02/10 20:20: "não há o olho com contador de saída da tela cheia" (como na RETOMADA) -->
+  <button type="button" class="chip tcbtn" id="btTC" onclick="pedirTelaCheia()"><span class="em20">🖥️</span> Tela cheia</button>
+  <span class="chip sai" id="stSaidas"><span class="em20">👁️</span> Saídas: 0</span>
+</div>
+<div id="idbar">
+  <div class="l1">Recuperação · Língua Portuguesa · 9º ano · 3º bimestre</div>
+  <div class="l2"><span class="unid">TEXTO: </span>A Tela que Desliga o Saber</div>
+  <div class="l3"><span class="em20">🏫</span> E.E. Dr. Benedicto Martins Barbosa</div>
+</div>
+
+<div id="area">
+  <div id="palco"></div>
+  <div id="faixa"><div class="vazio" id="fvazio">sem<br>marcas<br>aqui</div></div>
+  <svg id="fios"></svg>
+</div>
+
+<div id="rod">
+  <button id="bVolta" onclick="voltar()">← Voltar</button>
+  <button id="bSum" onclick="abrirSumario()">☰ Sumário</button>
+  <button id="bProx" class="pr" onclick="avancar()">Começar →</button>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   DADOS · Recuperação 3º bimestre · 9º ano · Língua Portuguesa
+   Texto: "A Tela que Desliga o Saber" · artigo de opinião
+   CLD-404 · V01.00 · N.05.01.00_PADRONIZADOR_001
+   ══════════════════════════════════════════════════════════════════ */
+
+/* 🔴 OS DOIS EIXOS DO GRIFO CLASSIFICATORIO · Marcos, 29/09 08:45
+   Eixo 1 · TIPO    · de que natureza e' o trecho
+   Eixo 2 · ESTAGIO · onde no problema ele esta'
+   A comparacao do Marcos: e' bula de remedio. Sintoma → consequencia → remedio/escudo. */
+
+var TIPOS = {
+  cog: {emo:"🧠", nome:"cognitivo",      cor:"#2E5C8A", fundo:"#E8EFF6", diz:"tem a ver com pensar, aprender e prestar atenção"},
+  soc: {emo:"👥", nome:"social",         cor:"#3F7A35", fundo:"#E9F3E6", diz:"tem a ver com conviver com as outras pessoas"},
+  emo: {emo:"😟", nome:"emocional",      cor:"#B4306B", fundo:"#FBE9F1", diz:"tem a ver com o que a pessoa sente por dentro"},
+  se:  {emo:"🤝", nome:"socioemocional", cor:"#7B3FA0", fundo:"#F2E9F7", diz:"é social e emocional ao mesmo tempo: o convívio mexe com o sentimento"}
+};
+
+var ESTAGIOS = {
+  sin: {emo:"🔍", nome:"sintoma",     diz:"é o que aparece, o sinal de que tem algo errado"},
+  con: {emo:"➡️", nome:"consequência", diz:"é no que aquilo dá, o resultado"},
+  tra: {emo:"💊", nome:"tratamento",   diz:"é o remédio, o que fazer com o problema que já existe"},
+  pre: {emo:"🛡️", nome:"prevenção",   diz:"é o escudo, o que fazer para o problema não acontecer"}
+};
+
+/* 🔴 O PRIMEIRO GRIFO · a estrutura do genero, pela norma
+   Artigo de opiniao: cada paragrafo tem funcao fixa. E' isso que a pergunta 1 e a 3 cobram. */
+var FUNCOES = {
+  f1: {n:"1", rot:"Contextualização e tese",  diz:"apresenta a cena e diz o que o autor vai defender"},
+  f2: {n:"2", rot:"Argumento de autoridade",  diz:"traz estudo e explicação de especialista para sustentar a tese"},
+  f3: {n:"3", rot:"Argumento testemunhal",    diz:"mostra a cena do dia a dia que qualquer um reconhece"},
+  f4: {n:"4", rot:"Concessão e refutação",    diz:"dá razão ao outro lado e depois vira: é o parafuso do texto"},
+  f5: {n:"5", rot:"Conclusão e proposta",     diz:"retoma a tese e aponta o caminho"}
+};
+
+var TITULO = "A Tela que Desliga o Saber";
+var GENERO = "Artigo de opinião";
+
+/* 🔴 CLD-011 · PADRONIZADOR_002 · COMO SE CONSTRÓI CADA PARÁGRAFO DO GÊNERO.
+   Marcos, 01/10 05:51: "como construir cada parágrafo ... e incluir onde for possível,
+   para ajudar a responder, em forma de perguntas, as 07 chaves 5W2H".
+   🔵 A ordem e o conteúdo vêm do GÊNERO TEXTUAL (dissertativo-argumentativo), não da ABNT:
+   a ABNT normatiza formatação e citação, não a estrutura do artigo. Por isso o rótulo na
+   tela é "estrutura do gênero".
+   `linhas` é orientação para uma folha de redação de até 30 linhas, não regra.
+   `deve` = o que o parágrafo precisa ter · `perg` = as perguntas, com a chave do 5W2H. */
+var ESTRUTURA = {
+  f1: {linhas:"4 a 6", deve:["mostrar a cena do problema","dizer a opinião do autor (a tese)"],
+       perg:[{k:"ONDE",  p:"Onde e quando o problema acontece?"},
+             {k:"O QUÊ", p:"O que está acontecendo?"},
+             {k:"O QUÊ", p:"O que eu defendo? Essa é a tese."}]},
+  f2: {linhas:"5 a 7", deve:["trazer um estudo, uma lei ou um especialista","explicar por que isso apoia a tese"],
+       perg:[{k:"POR QUÊ", p:"Por que a minha opinião está certa?"},
+             {k:"QUEM",    p:"Quem comprova o que eu digo?"}]},
+  f3: {linhas:"4 a 6", deve:["mostrar um exemplo que todo mundo reconhece","ligar o exemplo à tese"],
+       perg:[{k:"ONDE", p:"Onde isso aparece no dia a dia?"},
+             {k:"QUEM", p:"Quem sofre com isso?"}]},
+  f4: {linhas:"4 a 6", deve:["dar razão ao outro lado em um ponto","virar o argumento com «contudo», «porém» ou «mas»"],
+       perg:[{k:"O QUÊ",   p:"O que o outro lado diz que é verdade?"},
+             {k:"POR QUÊ", p:"Por que, mesmo assim, a minha tese vale?"},
+             {k:"COMO",    p:"Como fazer do jeito certo?"}]},
+  f5: {linhas:"3 a 5", deve:["retomar a tese","propor uma solução"],
+       perg:[{k:"O QUÊ", p:"O que deve ser feito?"},
+             {k:"QUEM",  p:"Quem deve fazer?"},
+             {k:"COMO",  p:"Como fazer?"}]}
+};
+/* 🔴 CLD-011 · ESTE TEXTO CUMPRE? · a prova de cada item de `deve`, com o trecho do texto.
+   Mesma ordem de ESTRUTURA[f].deve. Trecho vazio = o parágrafo não cumpre aquele item. */
+var CUMPRE = {
+  f1: ["O sinal toca, os alunos entram na sala e (…) os celulares já estão a postos.",
+       "É urgente discutir o papel real do smartphone no ambiente escolar."],
+  f2: ["Estudos demonstram que a simples presença do celular por perto já reduz a capacidade de concentração.",
+       "O cérebro em desenvolvimento (…) precisa de pausas e de esforço sustentado para aprender."],
+  f3: ["O recreio (…) transformou-se em um deserto de silêncio coletivo.",
+       "Esse isolamento digital alimenta quadros de ansiedade."],
+  f4: ["É evidente que a tecnologia tem valor pedagógico inegável.",
+       "Contudo, o uso educativo deve ser intencional, planejado e mediado pelo professor."],
+  f5: ["Proibir ou restringir o celular na escola não é fechar portas para o futuro.",
+       "A escola precisa continuar sendo o reduto onde o foco (…) resiste à ditadura da distração."]
+};
+
+/* Cada paragrafo e' uma lista de pedacos.
+   String pura  = texto sem marca.
+   {m:"..."}    = trecho marcado, com tipo, estagio, palavra articuladora e o porque.
+   {q:"..."}    = 🔴 CLD-011 · o ❓ vermelho ANTES da frase: a pergunta que a frase responde,
+                  com a chave do 5W2H. Marcos, 01/10 05:51: "o emoji antes da frase, como se
+                  a frase fosse a resposta". */
+var TEXTO = [
+{f:"f1", p:[
+  {q:"qq01", k:"ONDE", p:"Onde e quando o problema acontece?"},
+  "O sinal toca, os alunos entram na sala e, antes mesmo de abrirem os cadernos, os celulares já estão a postos. A promessa é de que o aparelho serve para acompanhar a aula ou pesquisar termos rápidos. A realidade, no entanto, mostra um cenário bem diferente: ",
+  {m:"m01", t:"notificações constantes, redes sociais abertas embaixo da carteira", tipo:"cog", est:"sin", pal:"distração",
+   por:"É o que se vê acontecendo na sala, agora, com os olhos. Ainda não é o resultado — é o sinal de que tem algo errado. Por isso é sintoma. E é cognitivo porque ataca direto a atenção, que é a ferramenta de aprender."},
+  " e ",
+  {m:"m02", t:"uma fragmentação profunda da atenção", tipo:"cog", est:"sin", pal:"atenção",
+   por:"«Fragmentação» quer dizer partir em pedaços. A atenção não some: ela se quebra. É sintoma porque descreve o estado em que a atenção fica, não o estrago que isso causa depois."},
+  ". ",
+  {q:"qq02", k:"O QUÊ", p:"O que o autor defende? Essa é a tese."},
+  "É urgente discutir o papel real do smartphone no ambiente escolar."
+]},
+{f:"f2", p:[
+  {q:"qq03", k:"QUANDO", p:"Quando e onde o assunto ganhou força?"},
+  "Recentemente, o debate sobre o banimento ou a restrição desses dispositivos ganhou força em leis municipais e federais. Não se trata de uma cruzada antiquada contra a tecnologia, mas de uma constatação cognitiva e social. ",
+  {q:"qq04", k:"POR QUÊ", p:"Por que o celular atrapalha o aprender?"},
+  {m:"m03", t:"O cérebro em desenvolvimento de crianças e adolescentes precisa de pausas e de esforço sustentado para aprender", tipo:"cog", est:"tra", pal:"pausa",
+   por:"Aqui o autor não está mostrando o problema: está dizendo do que o cérebro precisa. É a receita, o remédio. Por isso tratamento, e não sintoma."},
+  ". Quando o acesso ao entretenimento instantâneo está a um toque de distância, ",
+  {m:"m04", t:"a paciência para ouvir uma explicação longa ou debater um conceito complexo desaparece", tipo:"cog", est:"con", pal:"paciência",
+   por:"Isto já é o estrago. A paciência desaparecer é o resultado do celular por perto, não o sinal. Por isso consequência."},
+  ". ",
+  {q:"qq05", k:"QUEM", p:"Quem comprova o que o autor diz?"},
+  "Estudos demonstram que ",
+  {m:"m05", t:"a simples presença do celular por perto já reduz a capacidade de concentração", tipo:"cog", est:"sin", pal:"presença",
+   por:"É a resposta exata da pergunta 2 da prova. Sintoma porque descreve o efeito imediato da presença, sem nem tocar no aparelho."},
+  ", ",
+  {m:"m06", t:"prejudicando o desempenho acadêmico", tipo:"cog", est:"con", pal:"nota",
+   por:"O desempenho cair é o fim da linha: primeiro a concentração cai (sintoma), depois a nota cai (consequência). O gerúndio «prejudicando» é a pista de que veio depois."},
+  "."
+]},
+{f:"f3", p:[
+  {q:"qq06", k:"ONDE", p:"Onde mais o problema aparece?"},
+  "Além da sala de aula, ",
+  {m:"m07", t:"o recreio — que deveria ser o espaço legítimo da socialização, da corrida, do diálogo olho no olho e até do tédio criativo — transformou-se em um deserto de silêncio coletivo", tipo:"soc", est:"sin", pal:"recreio",
+   por:"É a resposta da pergunta 3. Social porque fala do convívio, não do aprender. Sintoma porque é a cena que se vê — «deserto de silêncio» é a imagem do sinal."},
+  ", onde dezenas de jovens olham para telas individuais. ",
+  {q:"qq07", k:"O QUÊ", p:"O que o isolamento causa?"},
+  {m:"m08", t:"Esse isolamento digital", tipo:"se", est:"sin", pal:"sozinho",
+   por:"Aqui os dois eixos se encontram: estar sozinho é social, sentir-se sozinho é emocional. Por isso socioemocional. É o trecho que amarra o parágrafo inteiro."},
+  " alimenta ",
+  {m:"m09", t:"quadros de ansiedade", tipo:"emo", est:"con", pal:"ansiedade",
+   por:"Emocional puro: é o que a pessoa sente por dentro. Consequência porque o verbo «alimenta» diz que veio do isolamento, que é o sintoma anterior."},
+  ", ",
+  {m:"m10", t:"comparações tóxicas", tipo:"emo", est:"sin", pal:"comparar",
+   por:"Comparar-se com os outros é o sinal, o que acontece enquanto se rola a tela. A ansiedade é o que vem depois. Por isso este é sintoma e o anterior, consequência."},
+  " e ",
+  {m:"m11", t:"prejudica o desenvolvimento de habilidades sociais indispensáveis para a vida adulta", tipo:"soc", est:"con", pal:"convívio",
+   por:"É o estrago de longo prazo: não é o que acontece hoje no recreio, é o que falta lá na frente. Consequência, e social porque fala de habilidade de conviver."},
+  "."
+]},
+{f:"f4", p:[
+  {q:"qq08", k:"O QUÊ", p:"O que o outro lado tem de certo?"},
+  "É evidente que a tecnologia tem valor pedagógico inegável. ",
+  {q:"qq09", k:"POR QUÊ", p:"Por que a tese continua valendo?"},
+  "Contudo, ",
+  {m:"m12", t:"o uso educativo deve ser intencional, planejado e mediado pelo professor", tipo:"cog", est:"tra", pal:"mediação",
+   por:"É a resposta da pergunta 4. Tratamento porque diz o que fazer, não o que está errado. As três palavras — intencional, planejado, mediado — são a receita."},
+  ", ",
+  {q:"qq10", k:"COMO", p:"Como usar a tecnologia do jeito certo?"},
+  "utilizando ",
+  {m:"m13", t:"ferramentas da própria escola — como computadores ou tablets institucionais", tipo:"cog", est:"tra", pal:"escola",
+   por:"Continua o remédio, agora dizendo com o quê. É o outro lado da pergunta 4: o uso pedagógico usa o aparelho da escola; o uso livre usa o do bolso."},
+  " e não o aparelho pessoal de cada aluno, que abre margem para ",
+  {m:"m14", t:"desvios de conduta e desigualdades de acesso", tipo:"soc", est:"con", pal:"desigual",
+   por:"Social porque nem todo estudante tem o mesmo aparelho, e isso cria diferença entre eles. Consequência porque é o que o uso livre produz."},
+  "."
+]},
+{f:"f5", p:[
+  {q:"qq11", k:"O QUÊ", p:"O que o autor propõe?"},
+  {m:"m15", t:"Proibir ou restringir o celular na escola", tipo:"se", est:"pre", pal:"regra",
+   por:"Prevenção, não tratamento: a regra existe para o problema não chegar, não para curar quem já está preso à tela. Socioemocional porque a regra protege o convívio e o que ele faz sentir."},
+  " não é fechar portas para o futuro, mas abrir espaço para o presente. ",
+  {q:"qq12", k:"POR QUÊ", p:"Por que a escola precisa fazer isso?"},
+  "A escola precisa continuar sendo o reduto onde ",
+  {m:"m16", t:"o foco, a troca humana e o pensamento crítico resistem à ditadura da distração", tipo:"se", est:"pre", pal:"reduto",
+   por:"Fecha o texto retomando a tese. «Foco» é cognitivo, «troca humana» é social — juntos, socioemocional. Prevenção porque a palavra «resistem» é de escudo, não de remédio."}
+]}
+];
+
+/* 🔴 AS 7 PERGUNTAS-CHAVE · as 5 da prova de recuperacao + 2 do genero.
+   c = classe do chute a gol · a 5a classe (imp) entra aqui pela primeira vez. */
+
+/* 🔴 CLD-011 · GRIFO E GLOSSÁRIO DAS PERGUNTAS · Marcos, 01/10 05:57: "precisa ter grifo e
+   glossário também, assim como chute a gol". Copia o jeito da base:
+   GRIFO_Q = as palavras do ENUNCIADO que decidem a resposta (amarelo, como o grifo do texto);
+   GLOS    = a pastilha azul que abre a explicação curta (nível de 9 anos, verifica, não ensina). */
+var GRIFO_Q = {
+  q1:["tese","ideia principal"],
+  q2:["concentração","mesmo sem ser tocado"],
+  q3:["recreio","principal crítica"],
+  q4:["uso livre","uso pedagógico"],
+  q5:["social","emocional","restrição"],
+  q6:["dá razão ao outro lado","virar o argumento"],
+  q7:["4º parágrafo","virada"]
+};
+var GLOS = {
+  "tese":"É a ideia principal que o autor defende no texto.",
+  "argumento":"É o motivo que o autor usa para provar a tese.",
+  "concessão":"É quando o autor dá razão ao outro lado em um ponto.",
+  "refutação":"É quando o autor vira o argumento e mostra que a tese continua valendo.",
+  "parágrafo":"É cada bloco do texto que começa numa linha nova.",
+  "concentração":"É manter a atenção numa coisa só, por um tempo.",
+  "crítica":"É apontar o que está errado em alguma coisa.",
+  "restrição":"É um limite: pode usar, mas com regra.",
+  "pedagógico":"Que serve para ensinar e aprender.",
+  "desempenho acadêmico":"É o resultado do estudante na escola, como as notas."
+};
+var PERGUNTAS = [
+{id:"q1", de:"prova 1", t:"Qual é a tese (ideia principal) defendida pelo autor no texto?",
+ alts:[
+  {L:"A", t:"O smartphone precisa ser discutido e restringido na escola, porque atrapalha o aprender e o convívio.", c:"gol",
+   j:"É a tese. Ela aparece no fim do 1º parágrafo e volta no 5º — num artigo de opinião, tese que fecha o texto é tese confirmada."},
+  {L:"B", t:"A tecnologia não tem valor pedagógico nenhum e deveria sair da escola.", c:"contra",
+   j:"O texto diz o contrário, com todas as letras: «a tecnologia tem valor pedagógico inegável». Ler ao contrário do que está escrito é gol contra."},
+  {L:"C", t:"O celular reduz a capacidade de concentração dos alunos.", c:"imp", rot:"IMPEDIDO",
+   j:"Isto é verdade e está no texto — mas é um argumento, não a tese. A tese é a ideia que os argumentos sustentam. Está certo e não responde: impedido."},
+  {L:"D", t:"As leis municipais e federais sobre celular ganharam força recentemente.", c:"fora",
+   j:"É um dado de contexto do 2º parágrafo. Não é o que o autor defende, é o que ele conta."}
+ ]},
+{id:"q2", de:"prova 2", t:"De acordo com o texto, o que acontece com a capacidade de concentração do aluno quando o celular está por perto, mesmo sem ser tocado?",
+ alts:[
+  {L:"A", t:"Ela já fica reduzida, e isso prejudica o desempenho acadêmico.", c:"gol",
+   j:"Está no 2º parágrafo, quase nestas palavras: «a simples presença do celular por perto já reduz a capacidade de concentração»."},
+  {L:"B", t:"Ela só cai se o aluno pegar o aparelho e abrir alguma rede social.", c:"contra",
+   j:"O texto diz justamente que não precisa tocar. Inverter o «mesmo sem ser tocado» é gol contra."},
+  {L:"C", t:"Ela fica fragmentada por causa das notificações constantes.", c:"trave", rot:"NA TRAVE",
+   j:"Quase. A fragmentação está no 1º parágrafo e é verdadeira, mas a pergunta é sobre o celular por perto sem ser tocado — e aí a causa é a presença, não a notificação."},
+  {L:"D", t:"Ela melhora, porque o aluno pode pesquisar termos rápidos.", c:"contra",
+   j:"Isso é a promessa que o texto apresenta no 1º parágrafo justamente para derrubar na frase seguinte: «A realidade, no entanto, mostra um cenário bem diferente»."}
+ ]},
+{id:"q3", de:"prova 3", t:"No terceiro parágrafo, o autor menciona o impacto do celular durante o recreio. Qual é a principal crítica feita a esse momento?",
+ alts:[
+  {L:"A", t:"O recreio, que deveria ser espaço de socialização, virou um deserto de silêncio coletivo.", c:"gol",
+   j:"É a crítica central. Repare na construção: o autor diz primeiro o que o recreio deveria ser, e só então o que ele virou. É assim que se monta uma crítica."},
+  {L:"B", t:"Os alunos deixaram de correr e brincar no pátio da escola.", c:"trave", rot:"NA TRAVE",
+   j:"A corrida está citada, sim — mas como um dos itens da lista do que se perdeu. Parar nela é parar antes: a crítica é o silêncio coletivo, que engloba tudo."},
+  {L:"C", t:"O tédio criativo é importante para o desenvolvimento das crianças.", c:"imp", rot:"IMPEDIDO",
+   j:"Está no texto, entre travessões, e é verdade — mas é um detalhe dentro da lista, não a crítica principal. Certo e fora do alvo: impedido."},
+  {L:"D", t:"A escola não oferece atividades organizadas durante o intervalo.", c:"fora",
+   j:"O texto não fala em nenhum momento sobre o que a escola oferece ou deixa de oferecer no recreio."}
+ ]},
+{id:"q4", de:"prova 4", t:"Segundo o artigo, qual é a diferença entre o uso livre do celular e o uso pedagógico da tecnologia?",
+ alts:[
+  {L:"A", t:"O pedagógico é intencional, planejado e mediado pelo professor, com aparelho da escola; o livre é o aparelho pessoal, sem mediação.", c:"gol",
+   j:"É o 4º parágrafo inteiro, resumido. As três palavras — intencional, planejado, mediado — são a definição que o autor dá."},
+  {L:"B", t:"O pedagógico usa aplicativos educativos e o livre usa redes sociais.", c:"trave", rot:"NA TRAVE",
+   j:"O caminho está certo — separar por finalidade — mas o texto não separa por aplicativo. Ele separa por quem conduz: com professor mediando ou sem."},
+  {L:"C", t:"O uso pedagógico acontece na sala e o uso livre acontece no recreio.", c:"fora",
+   j:"O texto trata dos dois momentos, mas nunca define a diferença por onde o aluno está."},
+  {L:"D", t:"Não há diferença: qualquer uso de tela na escola prejudica o aluno.", c:"contra",
+   j:"É o oposto do 4º parágrafo, que começa reconhecendo o valor pedagógico da tecnologia."}
+ ]},
+{id:"q5", de:"prova 5", t:"Identifique no texto um argumento de ordem social ou emocional usado para defender a restrição dos aparelhos.",
+ alts:[
+  {L:"A", t:"O isolamento digital alimenta ansiedade, comparações tóxicas e prejudica habilidades sociais.", c:"gol",
+   j:"É o 3º parágrafo. Repare: ansiedade e comparação são emocionais; habilidades sociais são sociais. O isolamento amarra os dois — é socioemocional."},
+  {L:"B", t:"A presença do celular reduz a concentração e prejudica o desempenho acadêmico.", c:"imp", rot:"IMPEDIDO",
+   j:"É um argumento forte, verdadeiro e está no texto — mas é cognitivo, não social nem emocional. A pergunta pediu ordem social ou emocional. Certo e fora do alvo: impedido."},
+  {L:"C", t:"As leis municipais e federais ganharam força recentemente.", c:"fora",
+   j:"É contexto, não argumento. E é de ordem legal, nem social nem emocional."},
+  {L:"D", t:"Os alunos aprendem melhor quando usam o celular para pesquisar.", c:"contra",
+   j:"Além de não ser social nem emocional, defende o contrário da tese do texto."}
+ ]},
+{id:"q6", de:"chave · estrutura", t:"Em qual parágrafo o autor dá razão ao outro lado antes de virar o argumento contra ele?",
+ alts:[
+  {L:"A", t:"No 4º: «É evidente que a tecnologia tem valor pedagógico inegável. Contudo...»", c:"gol",
+   j:"Isso se chama concessão e refutação. O autor concede um ponto ao adversário para não parecer radical, e logo em seguida vira. É a marca do artigo de opinião bem escrito."},
+  {L:"B", t:"No 2º, quando diz que não é uma cruzada antiquada contra a tecnologia.", c:"trave", rot:"NA TRAVE",
+   j:"Quase: ali também há uma negação para se defender de uma acusação. Mas não há concessão — ele não dá razão a ninguém, só nega. Faltou a virada com «Contudo»."},
+  {L:"C", t:"No 1º, quando apresenta a promessa de que o aparelho serve para acompanhar a aula.", c:"trave", rot:"NA TRAVE",
+   j:"Também perto: ele apresenta o argumento do outro lado. Mas apresentar não é conceder — ele não chega a admitir que seja verdade, só conta o que se diz."},
+  {L:"D", t:"No 5º, quando diz que restringir não é fechar portas para o futuro.", c:"fora",
+   j:"O 5º parágrafo é conclusão. Ali o autor já não discute com ninguém: ele fecha."}
+ ]},
+{id:"q7", de:"chave · articulação", t:"Qual palavra do 4º parágrafo marca a virada do argumento — o parafuso que segura a concessão e a refutação?",
+ alts:[
+  {L:"A", t:"Contudo", c:"gol",
+   j:"É o operador argumentativo de oposição. Troque por «mas», «porém», «no entanto» ou «entretanto» e o texto continua funcionando igual. Tire a palavra e o parágrafo se desmonta."},
+  {L:"B", t:"Evidente", c:"imp", rot:"IMPEDIDO",
+   j:"«É evidente que» está lá e faz um trabalho de verdade: é a marca da concessão. Mas concessão não é virada — a virada vem depois. Certo e fora do alvo: impedido."},
+  {L:"C", t:"Utilizando", c:"fora",
+   j:"É um gerúndio que só continua a frase. Não opõe nada a nada."},
+  {L:"D", t:"Portanto", c:"fora",
+   j:"Esta palavra nem aparece no texto — e se aparecesse, marcaria conclusão, não oposição."}
+ ]}
+];
+
+/* ══════════════════════════════════════════════════════════════════════════
+   🔴 CLD-013 · PADRONIZADOR_002 · AS 5 PERGUNTAS DA PROVA COMO DISSERTATIVA EM 5 FASES
+   Marcos, 01/10/2026 06:10: "a professora usou o modelo de pergunta aberta ... o 2-AAIM já
+   tem questões assim, construídas em 5 fases, usando ao menos 4 ou 5 das 7 chaves 5W2H ...
+   as alternativas ... são reescrita/cópia das frases, como citações retiradas do texto".
+   Régua copiada da dissertativa da BASE (RETOMADA 2AAIM, telas 149–155 do 6º):
+     · 5 frases por fase · 3 certas + 2 erradas · marque as 3 · fase N = NAV.0N (D01…D05)
+   ok: [frase, porquê]  ·  no: [frase, classe do chute, porquê]
+   As citações entre «» são do texto; as sem «» são reescrita fiel do texto.
+   ══════════════════════════════════════════════════════════════════════════ */
+var DISC = [
+{q:"q1", t:"Qual é a tese (ideia principal) defendida pelo autor no texto?",
+ modelo:"O autor defende que o celular precisa ser discutido e restringido na escola, porque a simples presença dele reduz a concentração e o isolamento digital alimenta a ansiedade. O problema aparece na sala e no recreio e atinge crianças e adolescentes. A saída é o uso planejado e mediado pelo professor, com os equipamentos da escola.",
+ fases:[
+ {k:"O QUÊ", p:"O que o autor defende?",
+  ok:[["«É urgente discutir o papel real do smartphone no ambiente escolar.»","É a frase que fecha o 1º parágrafo e anuncia a tese."],
+      ["«Proibir ou restringir o celular na escola não é fechar portas para o futuro.»","A conclusão retoma a tese: restringir é o caminho."],
+      ["«A escola precisa continuar sendo o reduto onde o foco (…) resiste.»","É a tese dita como proposta, no último parágrafo."]],
+  no:[["«É evidente que a tecnologia tem valor pedagógico inegável.»","imp","É verdade no texto, mas é a concessão do 4º parágrafo, não a tese."],
+      ["«O debate (…) ganhou força em leis municipais e federais.»","fora","É contexto: conta o que está acontecendo, não o que o autor defende."]]},
+ {k:"POR QUÊ", p:"Por que o autor defende isso?",
+  ok:[["«a simples presença do celular por perto já reduz a capacidade de concentração»","É o motivo cognitivo, com estudo por trás."],
+      ["«Esse isolamento digital alimenta quadros de ansiedade»","É o motivo emocional, do 3º parágrafo."],
+      ["«a paciência para ouvir uma explicação longa (…) desaparece»","É o estrago no aprender que justifica a tese."]],
+  no:[["«O sinal toca, os alunos entram na sala»","fora","É a cena de abertura, não um motivo."],
+      ["«o aparelho serve para acompanhar a aula ou pesquisar termos rápidos»","contra","É a promessa que o autor apresenta para derrubar logo depois."]]},
+ {k:"ONDE", p:"Onde o problema acontece?",
+  ok:[["Na sala, onde «os celulares já estão a postos»","O 1º parágrafo põe o problema dentro da sala."],
+      ["«o recreio (…) transformou-se em um deserto de silêncio coletivo»","O 3º parágrafo leva o problema para o recreio."],
+      ["«redes sociais abertas embaixo da carteira»","É a sala de aula, no detalhe da carteira."]],
+  no:[["«em leis municipais e federais»","imp","É onde o DEBATE acontece, não onde está o problema."],
+      ["«ferramentas da própria escola — como computadores ou tablets»","contra","Isso é a solução que o autor propõe, não o lugar do problema."]]},
+ {k:"QUEM", p:"Quem é afetado?",
+  ok:[["«o cérebro em desenvolvimento de crianças e adolescentes»","O 2º parágrafo diz quem sofre no aprender."],
+      ["«dezenas de jovens olham para telas individuais»","O 3º parágrafo mostra quem fica isolado."],
+      ["«os alunos», que entram com «os celulares já (…) a postos»","A cena de abertura já mostra os afetados."]],
+  no:[["«o professor», que deve mediar o uso","imp","O professor conduz o uso; o texto não diz que ele é o prejudicado."],
+      ["os autores das «leis municipais e federais»","fora","As leis entram como contexto, não como quem sofre."]]},
+ {k:"COMO", p:"Como o autor propõe resolver?",
+  ok:[["«Proibir ou restringir o celular na escola»","É a proposta do último parágrafo."],
+      ["«o uso educativo deve ser intencional, planejado e mediado pelo professor»","É o jeito certo de usar, segundo o 4º parágrafo."],
+      ["Usar as «ferramentas da própria escola», e não «o aparelho pessoal»","É o como: com o equipamento da escola."]],
+  no:[["Deixar cada um «pesquisar termos rápidos» no próprio celular","contra","É o uso livre que o texto critica."],
+      ["«É evidente que a tecnologia tem valor pedagógico inegável»","imp","É verdade, mas é a concessão; não diz como resolver."]]}
+ ]},
+{q:"q2", t:"De acordo com o texto, o que acontece com a capacidade de concentração do aluno quando o celular está por perto, mesmo sem ser tocado?",
+ modelo:"Segundo o texto, a simples presença do celular por perto já reduz a capacidade de concentração do aluno, mesmo sem ser tocado. Estudos comprovam isso. Sem concentração, some a paciência para uma explicação longa, e o desempenho acadêmico cai.",
+ fases:[
+ {k:"O QUÊ", p:"O que acontece com a concentração?",
+  ok:[["«a simples presença do celular por perto já reduz a capacidade de concentração»","É a resposta, quase palavra por palavra."],
+      ["A concentração fica menor só de o celular estar perto","É a mesma frase do texto, reescrita."],
+      ["A capacidade de concentração «já» cai, antes de qualquer toque","O «já» do texto diz que nem precisa tocar."]],
+  no:[["A concentração só cai quando o aluno abre as redes sociais","contra","O texto diz o contrário: não precisa tocar no aparelho."],
+      ["O «tédio criativo» toma o lugar da concentração","fora","O tédio criativo é do recreio, no 3º parágrafo."]]},
+ {k:"QUANDO", p:"Quando isso acontece?",
+  ok:[["Quando o celular está «por perto», mesmo guardado","É o «mesmo sem ser tocado» da pergunta."],
+      ["«antes mesmo de abrirem os cadernos», com os celulares «a postos»","A cena mostra o celular presente desde o começo da aula."],
+      ["«Quando o acesso ao entretenimento instantâneo está a um toque de distância»","É o texto dizendo o momento em que a atenção se perde."]],
+  no:[["Só quando chega uma notificação","contra","O texto diz que a presença basta; não precisa chegar nada."],
+      ["No fim do bimestre, na semana das provas","fora","O texto não fala de época de prova."]]},
+ {k:"QUEM", p:"Quem comprova isso?",
+  ok:[["«Estudos demonstram que» a presença reduz a concentração","É a voz de autoridade do 2º parágrafo."],
+      ["Uma «constatação cognitiva e social», e não só uma opinião","O autor diz que o debate se apoia em constatação."],
+      ["O que se sabe do «cérebro em desenvolvimento»","É a explicação de especialista que sustenta o estudo."]],
+  no:[["«o professor», que media a aula","imp","O professor aparece no 4º parágrafo, conduzindo; não comprova o estudo."],
+      ["Os próprios alunos, que pedem para usar o celular","fora","O texto não cita alunos pedindo nada."]]},
+ {k:"COMO", p:"Como isso atrapalha o aluno?",
+  ok:[["«a paciência para ouvir uma explicação longa (…) desaparece»","É o efeito na aula, dito no 2º parágrafo."],
+      ["A atenção se parte em pedaços: «uma fragmentação profunda da atenção»","Fragmentar é partir em pedaços."],
+      ["O cérebro perde as «pausas» e o «esforço sustentado» de que precisa","É o que o cérebro precisa e deixa de ter."]],
+  no:[["Faz o aluno «correr» mais no recreio","contra","O texto diz que a corrida sumiu do recreio."],
+      ["Cria «desigualdades de acesso» entre os alunos","imp","É verdade no texto, mas é outro problema, social, do 4º parágrafo."]]},
+ {k:"POR QUÊ", p:"Por que isso importa?",
+  ok:[["«prejudicando o desempenho acadêmico»","É a consequência final: a nota cai."],
+      ["Primeiro cai a concentração, depois cai a nota","É a ordem que o texto mostra: sintoma e depois consequência."],
+      ["Sem concentração, não dá para «debater um conceito complexo»","É o que o aluno deixa de conseguir fazer."]],
+  no:[["Prejudica «habilidades sociais indispensáveis para a vida adulta»","imp","É verdade, mas é do recreio, não da concentração."],
+      ["Porque o celular «serve para acompanhar a aula»","contra","É a promessa que o texto derruba."]]}
+ ]},
+{q:"q3", t:"No terceiro parágrafo, o autor menciona o impacto do celular durante o recreio. Qual é a principal crítica feita a esse momento?",
+ modelo:"A principal crítica é que o recreio, que deveria ser o espaço da socialização, da corrida e do diálogo olho no olho, virou um deserto de silêncio coletivo, com dezenas de jovens olhando para telas individuais. Esse isolamento alimenta a ansiedade e as comparações tóxicas e prejudica as habilidades sociais.",
+ fases:[
+ {k:"ONDE", p:"Onde acontece o que o autor critica?",
+  ok:[["«o recreio»","É o lugar que o 3º parágrafo critica."],
+      ["«Além da sala de aula»","É como o 3º parágrafo começa: sai da sala."],
+      ["O «espaço legítimo da socialização» da escola","É o recreio, nas palavras do autor."]],
+  no:[["«embaixo da carteira»","imp","Isso é dentro da sala, no 1º parágrafo."],
+      ["Nas «leis municipais e federais»","fora","As leis são contexto do 2º parágrafo."]]},
+ {k:"O QUÊ", p:"O que o recreio deveria ser?",
+  ok:[["«o espaço legítimo da socialização»","É o que o autor diz que o recreio deveria ser."],
+      ["O lugar «da corrida, do diálogo olho no olho»","É a lista do que se perdeu."],
+      ["O lugar «até do tédio criativo»","Até o tédio entra como coisa boa do recreio."]],
+  no:[["Um lugar de «telas individuais»","contra","Isso é o que o recreio VIROU, não o que deveria ser."],
+      ["Um lugar de «ferramentas da própria escola»","fora","As ferramentas são do uso pedagógico, na sala."]]},
+ {k:"O QUÊ", p:"O que o recreio virou?",
+  ok:[["«um deserto de silêncio coletivo»","É a imagem central da crítica."],
+      ["Um lugar onde «dezenas de jovens olham para telas individuais»","É a cena que prova o deserto."],
+      ["Um espaço de «isolamento digital»","É o nome que o autor dá ao problema."]],
+  no:[["Um lugar de «diálogo olho no olho»","contra","É o que o recreio deveria ser, não o que virou."],
+      ["Um lugar de «debate» sobre as leis","fora","O debate é do 2º parágrafo, fora da escola."]]},
+ {k:"QUEM", p:"Quem está envolvido?",
+  ok:[["«dezenas de jovens»","São os que estão no recreio, cada um na sua tela."],
+      ["Os estudantes, cada um com a sua tela","É a mesma cena, reescrita."],
+      ["«crianças e adolescentes»","O texto fala deles desde o 2º parágrafo."]],
+  no:[["«o professor», que media o uso","imp","O professor aparece no uso pedagógico, não no recreio."],
+      ["Os autores das «leis municipais e federais»","fora","Não aparecem no recreio."]]},
+ {k:"POR QUÊ", p:"Por que isso é ruim?",
+  ok:[["«alimenta quadros de ansiedade»","É o dano emocional."],
+      ["Traz «comparações tóxicas»","É o que acontece enquanto se rola a tela."],
+      ["«prejudica o desenvolvimento de habilidades sociais»","É o dano de longo prazo."]],
+  no:[["«reduz a capacidade de concentração» na aula","imp","É verdade, mas é cognitivo e do 2º parágrafo."],
+      ["Porque o recreio fica «criativo» demais","contra","O texto valoriza o tédio criativo; não critica."]]}
+ ]},
+{q:"q4", t:"Segundo o artigo, qual é a diferença entre o uso livre do celular e o uso pedagógico da tecnologia?",
+ modelo:"O uso pedagógico é intencional, planejado e mediado pelo professor, com computadores ou tablets da escola. O uso livre é o do aparelho pessoal de cada aluno, sem condução, e abre margem para desvios de conduta e desigualdades de acesso.",
+ fases:[
+ {k:"O QUÊ", p:"O que é o uso pedagógico?",
+  ok:[["O uso «intencional, planejado e mediado pelo professor»","É a definição do 4º parágrafo."],
+      ["O uso com «ferramentas da própria escola»","É com o equipamento da escola."],
+      ["O uso com «computadores ou tablets institucionais»","Institucional quer dizer da escola."]],
+  no:[["O uso do «aparelho pessoal de cada aluno»","contra","Isso é o uso livre, o oposto."],
+      ["O uso no «recreio», entre os colegas","fora","O recreio é o 3º parágrafo e não fala de uso pedagógico."]]},
+ {k:"COMO", p:"Como deve ser o uso pedagógico?",
+  ok:[["«intencional»: com um objetivo","Primeira palavra da receita."],
+      ["«planejado»: pensado antes","Segunda palavra da receita."],
+      ["«mediado pelo professor»: com alguém conduzindo","Terceira palavra da receita."]],
+  no:[["Livre, «a um toque de distância»","contra","É o uso que o texto critica."],
+      ["Proibido em qualquer situação","imp","O texto reconhece o «valor pedagógico»; não proíbe a tecnologia."]]},
+ {k:"QUEM", p:"Quem conduz o uso pedagógico?",
+  ok:[["«o professor»","O texto diz «mediado pelo professor»."],
+      ["A escola, com os seus próprios equipamentos","As ferramentas são «da própria escola»."],
+      ["Quem planeja a aula","«Planejado» exige alguém que planeje: o professor."]],
+  no:[["Cada aluno, com o próprio aparelho","contra","Isso é o uso livre."],
+      ["As «redes sociais»","fora","As redes aparecem como distração, não como condução."]]},
+ {k:"O QUÊ", p:"O que é o uso livre?",
+  ok:[["O uso do «aparelho pessoal de cada aluno»","É como o texto chama o uso livre."],
+      ["«redes sociais abertas embaixo da carteira»","É o uso livre acontecendo na sala."],
+      ["O «entretenimento instantâneo» a um toque","É o que o aparelho livre oferece."]],
+  no:[["O uso «planejado e mediado pelo professor»","contra","É o uso pedagógico, o oposto."],
+      ["O «tédio criativo» do recreio","fora","O tédio criativo é coisa boa, e é do recreio."]]},
+ {k:"POR QUÊ", p:"Por que o uso livre é um problema?",
+  ok:[["Porque «abre margem para desvios de conduta»","É a primeira consequência do uso livre."],
+      ["Porque cria «desigualdades de acesso»","Nem todo aluno tem o mesmo aparelho."],
+      ["Porque traz «notificações constantes»","É a distração do 1º parágrafo."]],
+  no:[["Porque a tecnologia «tem valor pedagógico inegável»","contra","Isso é a favor da tecnologia, não contra o uso livre."],
+      ["Porque as «leis» mandam","fora","O texto não usa a lei como motivo."]]}
+ ]},
+{q:"q5", t:"Identifique no texto um argumento de ordem social ou emocional usado para defender a restrição dos aparelhos.",
+ modelo:"Um argumento social e emocional é o do recreio: o isolamento digital transformou o espaço da socialização em um deserto de silêncio coletivo. Isso alimenta quadros de ansiedade e comparações tóxicas e prejudica as habilidades sociais, indispensáveis para a vida adulta. Por isso a escola deve ser o reduto da troca humana.",
+ fases:[
+ {k:"O QUÊ", p:"Qual é o argumento?",
+  ok:[["«Esse isolamento digital»","É o argumento que junta o social e o emocional."],
+      ["O recreio virou «um deserto de silêncio coletivo»","É o argumento social, com imagem."],
+      ["Os jovens ficam sozinhos, cada um na sua tela","É o isolamento, reescrito."]],
+  no:[["«a simples presença do celular (…) reduz a capacidade de concentração»","imp","É verdade, mas é cognitivo; a pergunta pede social ou emocional."],
+      ["O «debate» nas leis","fora","É contexto, não argumento."]]},
+ {k:"QUEM", p:"Quem sofre com isso?",
+  ok:[["«dezenas de jovens»","São os do recreio."],
+      ["«crianças e adolescentes»","O texto fala deles como os atingidos."],
+      ["Quem fica «olhando para telas individuais»","É quem se isola."]],
+  no:[["«o professor»","imp","O professor conduz; o texto não diz que ele sofre."],
+      ["As «leis municipais»","fora","Lei não sofre: é contexto."]]},
+ {k:"COMO", p:"Como isso afeta o lado emocional?",
+  ok:[["«alimenta quadros de ansiedade»","É o que a pessoa sente por dentro."],
+      ["Traz «comparações tóxicas»","Comparar-se o tempo todo faz mal."],
+      ["A pessoa se compara com os outros e se sente pior","É a comparação tóxica, reescrita."]],
+  no:[["«prejudicando o desempenho acadêmico»","imp","É verdade, mas é cognitivo: fala da nota."],
+      ["Traz «tédio criativo»","contra","O texto trata o tédio criativo como coisa boa, que se perdeu."]]},
+ {k:"COMO", p:"Como isso afeta o lado social?",
+  ok:[["«prejudica o desenvolvimento de habilidades sociais»","É o dano social de longo prazo."],
+      ["Acaba o «diálogo olho no olho»","É o que some do recreio."],
+      ["Some «a troca humana»","É o que a escola deve proteger."]],
+  no:[["Uma «fragmentação profunda da atenção»","imp","É verdade, mas é cognitivo."],
+      ["Aumenta a «socialização» no recreio","contra","O texto diz que a socialização sumiu."]]},
+ {k:"POR QUÊ", p:"Por que isso justifica a restrição?",
+  ok:[["A escola deve ser «o reduto onde (…) a troca humana (…) resiste»","A restrição protege o convívio."],
+      ["Restringir é «abrir espaço para o presente»","O presente é o convívio de agora."],
+      ["As habilidades sociais são «indispensáveis para a vida adulta»","É o que está em jogo lá na frente."]],
+  no:[["Porque «a tecnologia tem valor pedagógico inegável»","contra","Isso é a concessão, a favor da tecnologia."],
+      ["Porque «estudos demonstram» a queda da concentração","imp","É verdade, mas é argumento cognitivo, não social."]]}
+ ]}
+];
+/* a classificação NAV de cada tela · copiada da base: a questão do jeito que cai é NAV.07
+   (🔍 lupa na prova); a fase N da dissertativa é NAV.0N (D01 LOCALIZAR … D05 JUSTIFICAR) */
+var NAV_TELA = {
+  "NAV.07":{emo:"🔍", rot:"lupa na prova", cena:["🔍","📌","📎","📋","🗂️","🖊️","🕵️","💡"], f:["#3FA34D","#14532D","#0A3A1C"]},
+  "NAV.01":{emo:"🧙", rot:"faz de conta",  cena:["🧙","🔮","🕯️","✨","🧪","🐉","🪄","📜"]},
+  "NAV.02":{emo:"🎪", rot:"exagero de circo", cena:["🎪","🎭","🎟️","🤹","🦁","🤡","🎈","🎺"]},
+  "NAV.03":{emo:"🧩", rot:"peça trocada",  cena:["🧩","⚗️","🔩","🔧","🧱","🧰","🪛","📐"]},
+  "NAV.04":{emo:"⚙️", rot:"engrenagem emperrada", cena:["⚙️","🔌","🪚","🔨","🧲","🔋","🛠️","⛏️"]},
+  "NAV.05":{emo:"🎯", rot:"quase no alvo", cena:["🔭","🧭","🔬","🌌","🛰️","📈","📡","💫"]}
+};
+var DFASE = ["D01 · LOCALIZAR","D02 · IDENTIFICAR","D03 · USAR","D04 · TESTAR","D05 · JUSTIFICAR"];
+/* o assunto do texto também flutua na lateral: celular, tela, atenção, convívio */
+var CENA_ASSUNTO = ["📱","💻","📵","🔔","🧠","👥","⏰","📲"];
+/* os objetivos do placar parcial · um por pergunta da prova + o do gênero */
+var OBJETIVOS = [
+  {id:"o1", q:"q1", rot:"Achar a tese do texto"},
+  {id:"o2", q:"q2", rot:"Localizar uma informação: a concentração"},
+  {id:"o3", q:"q3", rot:"Entender a crítica ao recreio"},
+  {id:"o4", q:"q4", rot:"Comparar uso livre e uso pedagógico"},
+  {id:"o5", q:"q5", rot:"Reconhecer um argumento social ou emocional"},
+  {id:"o6", qs:["q6","q7"], rot:"Entender como o artigo se constrói"}
+];
+
+
+/* ══════════════════════════════════════════════════════════════════
+   ESTADO
+   ══════════════════════════════════════════════════════════════════ */
+var VER="V01.17", CLD="CLD-228";
+var tela="ident", iQ=0, estudante="", turma="", numero="";
+/* 🔴 CLD-469 · AS CORES DA TURMA VÊM JUNTO. São as MESMAS da RETOMADA, copiadas do motor
+   (TURMA_COR, linha 3613) e não escolhidas de novo aqui: azul · verde · laranja · roxo.
+   Se o 9ºC é laranja na revisão, tem de ser laranja aqui — a cor é como o estudante acha a
+   sua turma de relance, e cor que muda de arquivo para arquivo não serve para nada. */
+var TURMA_COR={A:{f:"#1A5FA8",b:"#D6E6F7"},B:{f:"#1E8449",b:"#D5F0DF"},
+               C:{f:"#C2410C",b:"#FBE3D3"},D:{f:"#7E22CE",b:"#EDDCF9"}};
+var resp={};
+/* 🔴 As tres camadas de grifo · Marcos, 29/09 08:45.
+   estr = a estrutura do genero (ABNT) · gr = o grifo de sempre · cls = o grifo classificatorio */
+var CAM={estr:true, gr:true, cls:true, perg:true, grq:true, glq:true};  /* CLD-011 · perg = os ❓ · CLD-015 · grq/glq = grifo e glossário NAS PERGUNTAS */
+
+function $(i){ return document.getElementById(i) }
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") }
+
+/* mapa rapido de todas as marcas */
+var MARCAS={};
+TEXTO.forEach(function(P){ P.p.forEach(function(x){ if(x && x.m) MARCAS[x.m]=x }) });
+
+/* ══════════════════════════════════════════════════════════════════
+   TELA 1 · identificacao
+   ══════════════════════════════════════════════════════════════════ */
+/* 🔴 CLD-011 · DESATIVADA, não apagada. Marcos, 01/10 05:51: "olha o tamanho do número de
+   chamada que você deixou ... o que se faz certo para o 2AAIM passa a valer para todos".
+   Esta tela tinha três blocos grandes, botão de turma de 230px e número largo como o nome.
+   A nova `telaIdent`, logo abaixo, copia a tela 2 da base (secab "Quem é você", 1.1/1.2/1.3,
+   turma 74px, número 118px). Para voltar a esta: renomear as duas. */
+function telaIdent_OFF_CLD011(){
+  var h='<div class="card"><h2>📘 '+esc(TITULO)+'</h2>'+
+    '<div class="sub">'+esc(GENERO)+' · recuperação do 3º bimestre · 9º ano</div>'+
+    '<div class="nota">Você vai ler o texto com marcações que dizem <b>que tipo de coisa</b> cada trecho é, '+
+    'e <b>em que ponto do problema</b> ele está. Depois vêm 7 perguntas.</div></div>'+
+    /* 🔴 CLD-468 · A ORDEM E' TURMA, NUMERO E NOME. SEMPRE, EM TODOS OS BUILDS.
+       Marcos, 01/10/2026 03:08: "por que voce, como padronizador, esta mudando a ordem?
+       sempre vem turma, numero e nome."
+       Ele tem razao e o erro e' meu. Na RETOMADA esta assim desde sempre, escrito nestas
+       palavras: 2.1 Sua turma · 2.2 Seu numero de chamada · 2.3 Seu nome completo. Eu montei
+       este build do zero em 29/09 e inverti, sem conferir o irmao — que e' exatamente o que
+       o nome deste no' existe para impedir.
+       🔴 A LICAO: build novo COPIA a ordem do que ja' existe. Padronizador que cria uma
+       ordem propria em cada arquivo nao esta padronizando, esta fragmentando.
+       As cores dos blocos (bl1 · bl3 · bl2) ficam na mesma sequencia da tela, para o
+       estudante que ja' viu a tela ontem nao estranhar a cor. So' o conteudo trocou. */
+    '<div class="bloco bl1"><h2><span class="cnum">1</span>Sua turma</h2><div class="turmas">';
+  ["9ºA","9ºB","9ºC","9ºD"].forEach(function(t,i){
+    var L=t.slice(-1), C=TURMA_COR[L]||{f:"#0C7064",b:"#E7F2F0"}, sel=(turma===t);
+    h+='<button type="button" class="esc'+(sel?" on":"")+'" onclick="marcarTurma(\''+t+'\')"'+
+       ' style="border-color:'+C.f+';background:'+(sel?C.f:C.b)+';color:'+(sel?"#fff":C.f)+'">'+
+       '<span class="tick">'+(sel?"✔":"")+'</span>'+
+       '<span class="cnum">1.'+(i+1)+'</span><b>'+t+'</b></button>';
+  });
+  h+='</div></div>'+
+    '<div class="bloco bl3"><h2><span class="cnum">2</span>Seu número de chamada</h2>'+
+    '<input type="number" id="inNum" placeholder="ex.: 26" value="'+esc(numero)+'" oninput="pintarRodape()"></div>'+
+    '<div class="bloco bl2"><h2><span class="cnum">3</span>Seu nome completo</h2>'+
+    '<input type="text" id="inNome" placeholder="nome e sobrenome" value="'+esc(estudante)+'" oninput="pintarRodape()"></div>';
+  $("palco").innerHTML=h;
+}
+/* 🔴 CLD-011 · A IDENTIFICAÇÃO DA BASE · mesma ordem, mesmas palavras, mesmos tamanhos.
+   Copiada da tela 2 da RETOMADA 2AAIM V09.80: secab teal (#00695C / #E7F2F0), subnúmeros
+   1.1 · 1.2 · 1.3 em #0C7064, asterisco vermelho de obrigatório, a linha de ajuda do nome. */
+function telaIdent(){
+  var obr='<span class="obr" title="campo obrigatório" aria-label="obrigatório">*</span>';
+  var h='<div class="card"><h2><span class="em20">📘</span> '+esc(TITULO)+'</h2>'+
+    '<div class="sub">'+esc(GENERO)+' · recuperação do 3º bimestre · 9º ano</div>'+
+    '<div class="nota">Você vai ler o texto com marcações que dizem <b>que tipo de coisa</b> cada trecho é, '+
+    'e <b>em que ponto do problema</b> ele está. Depois vêm 7 perguntas.</div></div>'+
+    '<div class="secab" style="--cs:#00695C;--csbg:#E7F2F0"><span class="sect"><span class="secn">1</span>Quem é você</span>'+
+    '<div class="campo"><label><span class="subn">1.1</span>Sua turma'+obr+'</label><div class="turmagrid">';
+  ["9ºA","9ºB","9ºC","9ºD"].forEach(function(t){
+    var L=t.slice(-1), C=TURMA_COR[L], sel=(turma===t);
+    h+='<button type="button" class="turmabtn" id="t'+L+'" onclick="marcarTurma(\''+t+'\')"'+
+       ' style="border-color:'+C.f+';background:'+(sel?C.f:C.b)+';color:'+(sel?"#fff":C.f)+'">'+t+'</button>';
+  });
+  h+='</div></div>'+
+    '<div class="campo"><label for="inNum"><span class="subn">1.2</span>Seu número de chamada'+obr+'</label>'+
+    '<input id="inNum" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="Ex.: 12" '+
+    'autocomplete="off" value="'+esc(numero)+'" oninput="this.value=this.value.replace(/\\D/g,\'\').slice(0,2);pintarRodape()"></div>'+
+    '<div class="campo"><label for="inNome"><span class="subn">1.3</span>Seu nome completo'+obr+'</label>'+
+    '<div class="dicanome">Escreva o seu nome e o sobrenome, como está na chamada.</div>'+
+    '<input id="inNome" type="text" placeholder="Digite seu nome" autocomplete="off" value="'+esc(estudante)+'" oninput="pintarRodape()"></div>'+
+    '</div>';
+  $("palco").innerHTML=h;
+}
+/* o topo da base · as pastilhas se atualizam a cada render */
+var T0=null;
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function pintarTopo_OFF_CLD013(){
+  try{
+    var nTelas=2+PERGUNTAS.length+1, nAt=1, et="identificação";
+    if(tela==="texto"){ nAt=2; et="leitura do texto" }
+    else if(tela==="q"){ nAt=3+iQ; et="pergunta "+(iQ+1)+" de "+PERGUNTAS.length }
+    else if(tela==="fim"){ nAt=nTelas; et="placar" }
+    var ac=0, feitas=0;
+    PERGUNTAS.forEach(function(q){ var r=resp[q.id]; if(!r) return; feitas++;
+      var a=q.alts.filter(function(x){return x.L===r})[0]; if(a&&a.c==="gol") ac++ });
+    $("stVer").textContent=VER;
+    $("stNome").textContent="Estudante: "+(estudante?("nº "+(numero||"—")+" · "+estudante):"—");
+    $("stTurma").textContent="Turma: "+(turma||"—");
+    $("stTela").textContent="Tela "+nAt+" de "+nTelas;
+    $("stEtapa").textContent=et;
+    $("stNota").innerHTML='<span class="em20">✔</span> '+ac+" de "+PERGUNTAS.length+(feitas?" · "+feitas+" respondidas":"");
+  }catch(e){}
+}
+function pintarRelogio(){
+  try{
+    var d=new Date(); $("stHora").innerHTML='<span class="em20">🕐</span> '+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+    if(T0){ var s=Math.floor((Date.now()-T0)/1000); $("cronoBox").textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0") }
+  }catch(e){}
+}
+setInterval(pintarRelogio,1000);
+/* 🔴 CLD-469 · O NOME É MAIÚSCULO, e sobe ENQUANTO o estudante digita — não no fim.
+   É a mesma rotina da camada da RETOMADA: ouve o `input`, converte, e devolve o cursor para
+   onde estava (sem o setSelectionRange o cursor pula para o fim a cada letra e o estudante
+   digita de trás para frente). O campo de número fica de fora: número não tem maiúscula. */
+(function(){
+  try{
+    document.addEventListener("input", function(ev){
+      var el=ev.target;
+      if(!el || el.tagName!=="INPUT") return;
+      if((el.type||"text").toLowerCase()!=="text") return;
+      var p=el.selectionStart, v=el.value||"", u=v.toUpperCase();
+      if(v!==u){ el.value=u; try{ el.setSelectionRange(p,p) }catch(e){} }
+    }, true);
+  }catch(e){}
+})();
+function marcarTurma(t){
+  guardarId(); turma=t; telaIdent(); devolverId(); pintarRodape();
+}
+/* 🔴 LICAO DO CLD-387 · a tela e' repintada a cada acao e os campos nasciam vazios.
+   Guarda antes, devolve depois, e so' em campo vazio. */
+function guardarId(){
+  var g={};
+  if($("inNome")) g.nome=$("inNome").value;
+  if($("inNum"))  g.num=$("inNum").value;
+  return (LAST_ID=g);
+}
+var LAST_ID={};
+function devolverId(){
+  if($("inNome") && !$("inNome").value && LAST_ID.nome) $("inNome").value=LAST_ID.nome;
+  if($("inNum")  && !$("inNum").value  && LAST_ID.num)  $("inNum").value=LAST_ID.num;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   TELA 2 · a leitura · o coracao deste arquivo
+   ══════════════════════════════════════════════════════════════════ */
+var CAM_C=0;   /* 🔴 CLD-052 · a camada cujo jeito de ver já foi aplicado */
+var CAMADAS={
+  1:{tt:"Camada 1 de 4 · o texto, puro", novo:["<span class=\"em20\">📄</span> O texto, sem marca nenhuma.","<span class=\"em20\">📖</span> A <b>pastilha azul</b> é uma palavra do glossário: toque para ver o que ela quer dizer."], ja:[]},
+  2:{tt:"Camada 2 de 4 · + o gênero", novo:["<span class=\"em20\">📐</span> O <b>gênero</b> do texto, em destaque.","<span class=\"em20\">🧱</span> Em cima de cada parágrafo, um card colorido: a <b>função</b> dele."], ja:["o texto","o glossário"]},
+  3:{tt:"Camada 3 de 4 · + as marcas que classificam", novo:["<span class=\"em20\">🏷️</span> Trechos marcados: o emoji diz <b>de que tipo</b> é o trecho.","<span class=\"em20\">➡️</span> A faixa da direita liga cada marca ao seu selo."], ja:["o texto","o glossário","o gênero e as funções"]},
+  4:{tt:"Camada 4 de 4 · + as perguntas de cada parágrafo", novo:["<span class=\"em20\">❓</span> O <span class=\"em20\">❓</span> antes de uma frase: aquela frase é a resposta.","<span class=\"em20\">⚙️</span> Agora <b>você escolhe</b> o que ver, nos botões de cima."], ja:["o texto","o glossário","o gênero e as funções","as marcas"]}
+};
+/* o jeito de ver de cada camada · o grifo de sempre fica desligado no texto: "grifo só nas perguntas" */
+function camadaAplica(c){
+  if(!c || CAM_C===c) return;
+  CAM_C=c;
+  CAM.gr=false; CAM.estr=(c>=2); CAM.cls=(c>=3); CAM.perg=(c>=4);
+}
+function cardCamada(c){
+  var K=CAMADAS[c]; if(!K) return "";
+  var h='<div class="camcard"><div class="camtt"><span class="em20">🆕</span> '+K.tt+'</div>';
+  K.novo.forEach(function(l){ h+='<div class="camln novo">'+l+'</div>' });
+  if(K.ja.length) h+='<div class="camln ja"><span class="em20">✔</span> Já estava: '+K.ja.join(" · ")+'.</div>';
+  h+='<div class="camtrilha">'+[1,2,3,4].map(function(k){ return '<span class="'+(k===c?"on":"")+'">'+k+'</span>' }).join("")+'</div></div>';
+  return h;
+}
+function telaTexto(){
+  var cR=(R[iT]&&R[iT].c)||4;
+  var h=cardCamada(cR);
+  if(cR>=4) h+='<div class="bloco bl5"><h2><span class="cnum">1</span>⚙️ O que você quer ver no texto</h2>'+
+    '<div class="sub">Ligue e desligue à vontade. O texto não muda: muda o que fica visível nele.</div>'+
+    '<div class="bts">'+
+      camBt("estr","1.1","🧱","A estrutura do texto","que função cada parágrafo tem")+
+      camBt("gr","1.2","🖍️","O grifo de sempre","as palavras que carregam o sentido")+
+      camBt("cls","1.3","🏷️","O grifo que classifica","de que tipo é cada trecho, e em que ponto do problema")+
+      camBt("perg","1.4","❓","As perguntas de cada parágrafo","a frase depois do <span class=\"em20\">❓</span> é a resposta")+
+      /* 🔴 CLD-015 · Marcos, 01/10 06:47: "grifo e glossário como opcional ... precisa ser clicável e funcional" */
+      camBt("grq","1.5","🖍️","Grifo nas perguntas","as palavras que decidem a resposta ficam em amarelo")+
+      camBt("glq","1.6","📖","Glossário nas perguntas","palavra difícil vira pastilha azul que abre a explicação")+
+    '</div></div>';
+
+  if(CAM.cls) h+=legenda();
+  var genH=(cR>=2)?'<span class="gen" id="genPill" onclick="abrirGenero()"><span class="em20">📐</span> '+esc(GENERO)+'</span> · ':'';
+
+  h+='<div class="card"><h2>📄 '+esc(TITULO)+'</h2>'+
+     /* 🔴 CLD-011 · o gênero em destaque e ligado à faixa · abre como o artigo se constrói */
+     /* 🔴 CLD-052 · o gênero só aparece a partir da camada 2. Antiga:
+     '<div class="sub"><span class="gen" id="genPill" onclick="abrirGenero()"><span class="em20">📐</span> '+esc(GENERO)+'</span> · 5 parágrafos · toque no nome do gênero para ver como ele se constrói</div><div id="leitura">'; */
+     '<div class="sub">'+genH+'5 parágrafos'+(cR>=2?' · toque no nome do gênero para ver como ele se constrói':'')+'</div><div id="leitura">';
+  TEXTO.forEach(function(P,i){
+    var F=FUNCOES[P.f];
+    /* 🔴 CLD-036 · cada parágrafo em 2 cards grudados: o de cima (número, função, como se constrói) na cor
+       da etapa, o de baixo só o texto, em branco. Cores fora do grifo (azul, verde, rosa e roxo são do grifo).
+       Antiga: h+='<div class="par'+(CAM.estr?" estr":"")+'">'+ */
+    var PCOR={"1":["#C2410C","#FDEBDD"],"2":["#6D4C41","#F1E7E2"],"3":["#8A6D00","#FBF1CF"],"4":["#455A64","#E3EAEE"],"5":["#263238","#E4E6E7"]}[F.n]||["#455A64","#E3EAEE"];
+    h+='<div class="par'+(CAM.estr?" estr":"")+'" style="--pc:'+PCOR[0]+';--pbg:'+PCOR[1]+'">'+
+       '<div class="parcab" onclick="abrirParagrafo('+i+')"><span class="pn">'+F.n+'</span>'+
+       '<span class="rot">'+esc(F.rot)+'</span>'+
+       '<button type="button" class="como"><span class="em20">🔎</span> como se constrói</button>'+
+       '<span class="dz">'+esc(F.diz)+'</span></div>'+
+       '<div class="tx">';
+    P.p.forEach(function(x){
+      /* 🔴 CLD-052 · o glossário já entra no texto, desde a camada 1. Antiga: if(typeof x==="string"){ h+=esc(x); return } */
+      if(typeof x==="string"){ h+=marcarTexto(x, []); return }
+      /* 🔴 CLD-011 · o ❓ antes da frase · a frase que vem depois é a resposta */
+      if(x.q){ if(CAM.perg) h+='<span class="qk" id="qk_'+x.q+'" data-q="'+x.q+'" onclick="abrirPerguntaChave(\''+x.q+'\')" title="a pergunta que esta frase responde">❓</span>'; return }
+      /* 🔴 CLD-052 · sem marca e sem grifo ligados, o trecho é texto puro (antes ficava o sublinhado da cor do tipo) */
+      if(!CAM.cls && !CAM.gr){ h+=marcarTexto(x.t, []); return }
+      var T=TIPOS[x.tipo], E=ESTAGIOS[x.est];
+      var cl="mk"+(CAM.cls?" on":"")+(CAM.gr?" gr":"");
+      h+='<mark class="'+cl+'" id="mk_'+x.m+'" data-m="'+x.m+'" onclick="abrirMarca(\''+x.m+'\')"'+
+         ' style="border-bottom-color:'+T.cor+(CAM.cls?';background:'+(CAM.gr?"#FFF3B0":T.fundo):"")+'">'+
+         esc(x.t)+'<span class="pin">'+T.emo+'</span></mark>';
+    });
+    h+='</div></div>';
+  });
+  h+='</div></div>';
+  $("palco").innerHTML=h;
+  desenharFaixa();
+}
+function camBt(k,num,e,tit,diz){
+  return '<button type="button" class="esc'+(CAM[k]?" on":"")+'" onclick="virar(\''+k+'\')">'+
+    '<span class="tick">'+(CAM[k]?"✔":"")+'</span>'+
+    '<span class="cnum">'+num+'</span><span class="e" style="font-size:24px">'+e+'</span>'+
+    '<b>'+tit+'</b><span class="d">'+diz+'</span></button>';
+}
+function virar(k){ CAM[k]=!CAM[k]; telaTexto() }
+
+function legenda(){
+  var h='<div class="bloco bl3"><h2><span class="cnum">2</span>🏷️ Como ler as marcas</h2>'+
+    '<div class="sub">O emoji grande diz <b>de que tipo</b> é. O selinho no canto diz <b>em que ponto do problema</b> ele está.</div>'+
+    '<div class="leg">';
+  Object.keys(TIPOS).forEach(function(k){
+    var T=TIPOS[k];
+    h+='<div class="legi" style="border-color:'+T.cor+';background:'+T.fundo+'">'+
+       '<span class="e">'+T.emo+'</span><span><b>'+T.nome+'</b><span>'+esc(T.diz)+'</span></span></div>';
+  });
+  h+='</div><div class="leg" style="margin-top:9px">';
+  Object.keys(ESTAGIOS).forEach(function(k){
+    var E=ESTAGIOS[k];
+    h+='<div class="legi"><span class="e">'+E.emo+'</span><span><b>'+E.nome+'</b><span>'+esc(E.diz)+'</span></span></div>';
+  });
+  h+='</div></div>';
+  return h;
+}
+
+/* 🔴 A FAIXA VERTICAL COM SERRILHADO · o pedido do Marcos de 29/09 08:45:
+   "uma seta ou serrilhado que ligue a frase ate o emoji que combine com a classificacao,
+   e a palavra que articula o emoji ao contexto".
+   O selo nasce na altura do trecho; se dois brigam pelo mesmo lugar, o de baixo desce. */
+function desenharFaixa(){
+  var fx=$("faixa"), fios=$("fios"), area=$("area");
+  fx.innerHTML=""; fios.innerHTML="";
+  /* 🔴 medido no CLD-404: o minHeight da tela anterior ficava preso e a tela de perguntas
+     nascia com metros de vazio embaixo. Zera antes de medir de novo. */
+  fx.style.minHeight="";
+  if(!CAM.cls){ fx.innerHTML='<div class="vazio">marcas<br>desligadas</div>'; return }
+  var base=area.getBoundingClientRect();
+  fios.setAttribute("width", base.width); fios.setAttribute("height", base.height);
+  fios.setAttribute("viewBox","0 0 "+base.width+" "+base.height);
+  var fila=[];
+  /* 🔴 CLD-011 · o gênero também ganha selo e fio, como as marcas */
+  var gp=document.getElementById("genPill");
+  if(gp){ var gr=gp.getBoundingClientRect(), gc=gp.closest(".card");
+    fila.push({gen:true, x:{m:"__gen", pal:"gênero"}, y:gr.top-base.top+gr.height/2,
+               ax:gr.right-base.left, ay:gr.bottom-base.top+6,
+               marg:gc?(gc.getBoundingClientRect().right-base.left-18):null}) }
+  document.querySelectorAll("mark.mk").forEach(function(el){
+    var x=MARCAS[el.dataset.m]; if(!x) return;
+    var r=el.getBoundingClientRect();
+    var y=r.top-base.top+r.height/2;
+    /* 🔴 CLD-011 · O FIO SAI POR BAIXO DA PALAVRA, NO VÃO ENTRE AS LINHAS.
+       Marcos, 01/10 05:51: "os serrilhados sobrepõem as palavras do texto ... no parágrafo
+       03 e 05 cobre de forma que mal dá para ler". O fio saía do MEIO da última linha do
+       trecho e atravessava o resto da linha, por cima das letras. Agora ele parte do fim da
+       última linha do trecho e corre no meio do vão até a margem (entrelinha 2,35). */
+    var rs=el.getClientRects(), u=rs[rs.length-1]||r;
+    var tx=el.closest(".tx"), lh=tx?parseFloat(getComputedStyle(tx).lineHeight):u.height*2;
+    var vao=Math.max(4,(lh-u.height)/2);
+    fila.push({x:x, y:y, ax:u.right-base.left, ay:u.bottom-base.top+vao, marg:tx?(tx.getBoundingClientRect().right-base.left):null});
+  });
+  var W=parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--FAIXA_W"))||58;
+  /* 🔴 LICAO MEDIDA · CLD-404: eu tinha cravado o passo em 62px, chutando a altura do selo.
+     Selo com palavra de duas linhas passa de 70px e cinco deles se sobrepuseram.
+     A regra agora e' a mesma da grade de cards: nunca cravar numero, medir o que existe.
+     Passagem 1 desenha e mede · passagem 2 empurra para baixo com a altura real. */
+  fila.forEach(function(f){
+    var T=f.gen?{fundo:"#EDE6F5",cor:"#6B4B9C",emo:"📐"}:TIPOS[f.x.tipo], E=f.gen?{emo:"🧭"}:ESTAGIOS[f.x.est];
+    var d=document.createElement("div");
+    d.className="selo"; d.style.top=(f.y-27)+"px";
+    d.style.background=T.fundo; d.style.borderColor=T.cor;
+    d.onclick=f.gen?abrirGenero:function(){ abrirMarca(f.x.m) };
+    d.innerHTML='<span class="st" style="color:#fff">'+E.emo+'</span>'+
+                '<span class="e">'+T.emo+'</span>'+
+                '<span class="p" style="color:'+T.cor+'">'+esc(f.x.pal)+'</span>';
+    fx.appendChild(d);
+    /* o fio: sai do fim do trecho e chega na borda esquerda da faixa */
+    var xf=base.width-W-22, x0=Math.min(f.ax+4, xf-6);
+    var p=document.createElementNS("http://www.w3.org/2000/svg","path");
+    p.setAttribute("d",caminhoFio(x0,f.ay,xf,f.y,f.marg));
+    p.setAttribute("stroke",T.cor); p.setAttribute("stroke-width","3");
+    p.setAttribute("stroke-dasharray","2 5"); p.setAttribute("stroke-linecap","round");
+    p.setAttribute("fill","none");
+    fios.appendChild(p);
+    var pt=document.createElementNS("http://www.w3.org/2000/svg","circle");
+    pt.setAttribute("cx",x0); pt.setAttribute("cy",f.ay); pt.setAttribute("r","4");
+    pt.setAttribute("fill",T.cor);
+    fios.appendChild(pt);
+  });
+  if(!fila.length){ fx.innerHTML='<div class="vazio">sem<br>marcas<br>aqui</div>'; return }
+
+  /* passagem 2 · empurra para baixo o que encostou, e refaz o fio de quem se mexeu */
+  var selos=fx.querySelectorAll(".selo"), paths=fios.querySelectorAll("path"), piso=-9999;
+  for(var i=0;i<selos.length;i++){
+    var alt=selos[i].offsetHeight || 60;
+    var topo=parseFloat(selos[i].style.top);
+    if(topo < piso+6) topo = piso+6;
+    selos[i].style.top=topo+"px";
+    piso = topo+alt;
+    var meio=topo+alt/2, f=fila[i];
+    var xf=base.width-W-22, x0=Math.min(f.ax+4, xf-6);
+    paths[i].setAttribute("d",caminhoFio(x0,f.ay,xf,meio,f.marg));
+  }
+  /* a faixa precisa ser alta o bastante para caber o ultimo selo */
+  fx.style.minHeight = Math.max(base.height, piso+14)+"px";
+}
+
+/* 🔴 CLD-011 · o desenho do fio: reto no vão até passar da margem do texto, e só então a
+   curva até o selo. A curva fica fora do texto, na sobra entre o card e a faixa. */
+function caminhoFio(x0,y0,xf,y1,marg){
+  var xm=(marg!=null)?Math.min(Math.max(marg+4,x0),xf-8):x0;
+  return "M "+x0+" "+y0+" L "+xm+" "+y0+" C "+((xm+xf)/2)+" "+y0+", "+((xm+xf)/2)+" "+y1+", "+xf+" "+y1;
+}
+/* 🔴 CLD-011 · O GÊNERO · a janela de como o artigo de opinião se constrói */
+function abrirGenero(){
+  var h='<div class="jantt"><span class="e">📐</span>'+esc(GENERO)+' · como se constrói</div>'+
+    '<div class="sub">A ordem dos parágrafos vem do gênero. Cada parágrafo responde a perguntas. '+
+    'As linhas são uma média para uma folha de até 30 linhas.</div>';
+  Object.keys(FUNCOES).forEach(function(k){
+    var F=FUNCOES[k], E=ESTRUTURA[k]||{perg:[],deve:[]};
+    h+='<div class="jancit" style="border-left-color:#6B4B9C;font-style:normal">'+
+       '<b>'+F.n+' · '+esc(F.rot)+'</b> · cerca de '+esc(E.linhas||"")+' linhas<br>'+
+       E.perg.map(function(q){ return '<span class="chave">'+q.k+'</span>'+esc(q.p) }).join("<br>")+'</div>';
+  });
+  janela(h);
+}
+/* 🔴 CLD-011 · O PARÁGRAFO · o que ele precisa ter, e se ESTE texto cumpre, na ordem e no conteúdo */
+function abrirParagrafo(i){
+  var P=TEXTO[i]; if(!P) return;
+  var F=FUNCOES[P.f], E=ESTRUTURA[P.f]||{deve:[],perg:[]}, C=CUMPRE[P.f]||[];
+  var naOrdem=(String(i+1)===String(F.n));
+  var h='<div class="jantt"><span class="e">🔎</span>'+F.n+' · '+esc(F.rot)+'</div>'+
+    '<div class="sub">'+esc(F.diz)+' · cerca de '+esc(E.linhas||"")+' linhas</div>'+
+    '<div class="janl"><span class="e">❓</span><span><b>As perguntas deste parágrafo</b></span></div>'+
+    E.perg.map(function(q){ return '<div class="cumpre"><span class="chave">'+q.k+'</span><span>'+esc(q.p)+'</span></div>' }).join("")+
+    '<div class="janl"><span class="e">📋</span><span><b>Este texto cumpre?</b></span></div>'+
+    '<div class="cumpre"><span class="em20">'+(naOrdem?"✅":"❌")+'</span><span><b>Ordem</b> · é o '+(i+1)+'º parágrafo e '+
+      (naOrdem?'está no lugar certo.':'deveria ser o '+F.n+'º.')+'</span></div>';
+  E.deve.forEach(function(d,k){
+    var ev=C[k]||"";
+    h+='<div class="cumpre"><span class="em20">'+(ev?"✅":"❌")+'</span><span><b>'+esc(d)+'</b>'+
+       (ev?'<br>“'+esc(ev)+'”':' · não aparece neste parágrafo')+'</span></div>';
+  });
+  janela(h);
+}
+/* 🔴 CLD-011 · O ❓ · a pergunta que a frase seguinte responde */
+var QCHAVE={};
+TEXTO.forEach(function(P){ P.p.forEach(function(x){ if(x && x.q) QCHAVE[x.q]=x }) });
+function abrirPerguntaChave(id){
+  var x=QCHAVE[id]; if(!x) return;
+  janela('<div class="jantt"><span class="e">❓</span>A pergunta desta frase</div>'+
+    '<div class="cumpre"><span class="chave">'+esc(x.k)+'</span><span><b>'+esc(x.p)+'</b></span></div>'+
+    '<div class="janl"><span class="e">👉</span><span>A resposta é a frase que vem <b>logo depois</b> do ❓ no texto.</span></div>');
+}
+function abrirMarca(id){
+  var x=MARCAS[id]; if(!x) return;
+  var T=TIPOS[x.tipo], E=ESTAGIOS[x.est];
+  janela(
+    '<div class="jantt"><span class="e">'+T.emo+'</span>'+esc(T.nome)+' · '+esc(x.pal)+'</div>'+
+    '<div class="sub">'+esc(T.diz)+'</div>'+
+    '<div class="jancit" style="border-left-color:'+T.cor+'">“'+esc(x.t)+'”</div>'+
+    '<div class="janl"><span class="e">'+E.emo+'</span><span><b>'+esc(E.nome)+'</b> — '+esc(E.diz)+'</span></div>'+
+    '<div class="janl"><span class="e">💬</span><span>'+esc(x.por)+'</span></div>'
+  );
+}
+function janela(dentro){
+  fecharJanela();
+  var d=document.createElement("div");
+  d.id="janela"; d.className="jan";
+  d.innerHTML='<div class="jancx">'+dentro+'<button class="fechar" onclick="fecharJanela()">Entendi ✓</button></div>';
+  d.onclick=function(ev){ if(ev.target===d) fecharJanela() };
+  document.body.appendChild(d);
+}
+function fecharJanela(){ var e=$("janela"); if(e) e.remove() }
+
+/* ══════════════════════════════════════════════════════════════════
+   AS 7 PERGUNTAS
+   ══════════════════════════════════════════════════════════════════ */
+var CLASSES={
+  gol:    {rot:"GOL",        tri:"⚽ ✅ 🎉", cl:"g-gol",    diz:"é a resposta"},
+  imp:    {rot:"IMPEDIDO",   tri:"⚽ 🚩 😤", cl:"g-imp",    diz:"está certo, mas não responde o que foi perguntado"},
+  trave:  {rot:"NA TRAVE",   tri:"⚽ 🚧 😬", cl:"g-trave",  diz:"o caminho certo, que parou antes do fim"},
+  fora:   {rot:"PRA FORA",   tri:"⚽ 💨 😠", cl:"g-fora",   diz:"foi falar de outra coisa"},
+  contra: {rot:"GOL CONTRA", tri:"⚽ 🔄 😵", cl:"g-contra", diz:"diz o contrário do que o texto diz"}
+};
+/* 🔴 CLD-011 · DESATIVADA, não apagada. Marcos, 01/10 05:57: "a tela de perguntas e
+   alternativas também está simples demais: não tem círculo com número indicando a pergunta,
+   não há uso do grifo, nem um separador da letra da alternativa em relação à frase ... e
+   também não está claro que só tem 1 correta". A nova está logo abaixo, copiada da tela de
+   pergunta da base (.croxo · ❓ PERGUNTA · .conector · .alt com .altletra). */
+function telaPerg_OFF_CLD011(){
+  var q=PERGUNTAS[iQ], r=resp[q.id];
+  var h='<div class="card"><div class="sub">pergunta '+(iQ+1)+' de '+PERGUNTAS.length+' · '+esc(q.de)+'</div>'+
+        '<h2>'+esc(q.t)+'</h2></div>';
+  h+='<div class="dica"><span class="em20">💡</span> <b>Dica</b> · volte ao texto pelo ☰ Sumário se precisar. As marcas continuam lá.</div>';
+  h+='<div class="alts">';
+  q.alts.forEach(function(a){
+    h+='<button type="button" class="alt'+(r===a.L?" sel":"")+'" onclick="marcar(\''+q.id+'\',\''+a.L+'\')">'+
+       '<span class="L">'+a.L+'</span>'+esc(a.t)+'</button>';
+    if(r){
+      var C=CLASSES[a.c];
+      h+='<div class="gol '+C.cl+'"><div class="cab"><span class="tri">'+C.tri+'</span>'+
+         (a.rot||C.rot)+'</div><div class="j">'+esc(a.j)+'</div></div>';
+    }
+  });
+  h+='</div>';
+  $("palco").innerHTML=h;
+  desenharFaixa();
+}
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function marcar_OFF_CLD013(id,L){ if(resp[id]) return; resp[id]=L; telaPerg(); pintarRodape() }
+
+/* 🔴 CLD-011 · A TELA DA PERGUNTA NO PADRÃO DA BASE */
+var GLOS_LIDO={};
+var NUMERAL=["","uma","duas","três","quatro","cinco","seis"];
+/* marca o texto: pastilha de glossário (azul) e grifo do enunciado (amarelo), sem mexer em tag */
+function marcarTexto(txt, grifos){
+  var raw=String(txt), low=raw.toLowerCase(), sp=[];
+  function livre(a,b){ return !sp.some(function(x){ return a<x.b && b>x.a }) }
+  function borda(i){ return i<0 || i>=raw.length || !/[A-Za-zÀ-ÿ0-9]/.test(raw[i]) }
+  if(CAM.glq) Object.keys(GLOS).sort(function(x,y){return y.length-x.length}).forEach(function(t){
+    var k=low.indexOf(t.toLowerCase());
+    while(k>=0){ var e=k+t.length;
+      if(borda(k-1)&&borda(e)&&livre(k,e)){ sp.push({a:k,b:e,t:"g",termo:t}); break }
+      k=low.indexOf(t.toLowerCase(),k+1) }
+  });
+  (CAM.grq?(grifos||[]):[]).forEach(function(g){
+    var k=low.indexOf(g.toLowerCase());
+    if(k>=0 && livre(k,k+g.length)) sp.push({a:k,b:k+g.length,t:"r"});
+  });
+  sp.sort(function(x,y){return x.a-y.a});
+  var h="", i=0;
+  sp.forEach(function(x){
+    h+=esc(raw.slice(i,x.a));
+    var w=esc(raw.slice(x.a,x.b));
+    if(x.t==="g") h+='<span class="tchip'+(GLOS_LIDO[x.termo]?" lido":"")+'" role="button" tabindex="0" '+
+      'onclick="event.stopPropagation();abrirGlos(\''+x.termo+'\')">'+w+'</span>';
+    else h+='<mark class="grq">'+w+'</mark>';
+    i=x.b;
+  });
+  return h+esc(raw.slice(i));
+}
+function abrirGlos(t){
+  GLOS_LIDO[t]=true;
+  janela('<div class="jantt"><span class="e">📖</span>'+esc(t)+'</div><div class="janl"><span class="e">💬</span><span>'+esc(GLOS[t]||"")+'</span></div>');
+  try{ if(tela==="q") telaPerg() }catch(e){}
+}
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function telaPerg_OFF_CLD013(){
+  var q=PERGUNTAS[iQ], r=resp[q.id], n=q.alts.length;
+  var cert=q.alts.filter(function(a){return a.c==="gol"})[0];
+  var h='<div class="croxo"><div class="cp-cmd"><span class="ctxnum">'+(iQ+1)+'</span>'+
+        'pergunta '+(iQ+1)+' de '+PERGUNTAS.length+' · '+esc(q.de)+'</div>'+
+        '<div class="qbox"><div class="qlab"><span class="em20">❓</span> PERGUNTA</div>'+
+        '<h3>'+marcarTexto(q.t, GRIFO_Q[q.id])+'</h3></div>'+
+        '<div class="conector"><span class="em20">👉</span> Leia as '+NUMERAL[n]+'. <b>Só uma</b> está certa. Marque <b>uma</b>.</div></div>';
+  h+='<div class="dica"><span class="em20">💡</span> <b>Dica</b> · volte ao texto pelo ☰ Sumário se precisar. As marcas continuam lá.</div>';
+  h+='<div class="glosaviso"><span class="em20">📖</span> As palavras em <b>pastilha azul</b> abrem uma explicação. Toque nelas enquanto lê.</div>';
+  h+='<div class="alts">';
+  q.alts.forEach(function(a){
+    var st="";
+    if(r){ if(a===cert) st=" certo"; else if(r===a.L) st=" errado" }
+    if(r===a.L) st+=" sel";
+    h+='<button type="button" class="alt alt2'+st+'" onclick="marcar(\''+q.id+'\',\''+a.L+'\')">'+
+       '<span class="altl"><span class="altletra">'+a.L+'</span></span>'+
+       '<span class="frase">'+marcarTexto(a.t,[])+'</span></button>';
+    if(r){
+      var C=CLASSES[a.c];
+      h+='<div class="gol '+C.cl+'"><div class="cab"><span class="tri">'+C.tri+'</span>'+
+         (a.rot||C.rot)+'</div><div class="j">'+esc(a.j)+'</div></div>';
+    }
+  });
+  h+='</div>';
+  $("palco").innerHTML=h;
+  desenharFaixa();
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PLACAR
+   ══════════════════════════════════════════════════════════════════ */
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function telaFim_OFF_CLD013(){
+  var acertos=0, porC={};
+  PERGUNTAS.forEach(function(q){
+    var r=resp[q.id]; if(!r) return;
+    var a=q.alts.filter(function(x){ return x.L===r })[0];
+    if(!a) return;
+    porC[a.c]=(porC[a.c]||0)+1;
+    if(a.c==="gol") acertos++;
+  });
+  var h='<div class="card"><h2>🏁 Placar</h2>'+
+    '<div class="nota">Você acertou <b>'+acertos+' de '+PERGUNTAS.length+'</b>.</div></div>'+
+    '<div class="bloco bl4"><h2><span class="cnum">1</span>Onde foram os seus chutes</h2><div class="leg">';
+  Object.keys(CLASSES).forEach(function(k){
+    var C=CLASSES[k], n=porC[k]||0;
+    h+='<div class="legi"><span class="e" style="font-size:20px;letter-spacing:1px">'+C.tri+'</span>'+
+       '<span><b>'+C.rot+' · '+n+'</b><span>'+esc(C.diz)+'</span></span></div>';
+  });
+  h+='</div></div>';
+  $("palco").innerHTML=h;
+  desenharFaixa();
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SUMARIO EM 2 PARTES
+   ══════════════════════════════════════════════════════════════════ */
+var TELAS_INI=[
+  {id:"ident", emo:"📝", nome:"Quem é você",  diz:"turma, número e nome"},
+  {id:"texto", emo:"📄", nome:"O texto",      diz:"a leitura com as marcas"}
+];
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function abrirSumario_OFF_CLD013(){
+  fecharSumario();
+  var ondeEstou=-1;
+  TELAS_INI.forEach(function(t,i){ if(tela===t.id) ondeEstou=i });
+  if(ondeEstou<0) ondeEstou=TELAS_INI.length;
+  var h='<div class="sumcx"><div class="sumtt">☰ Sumário</div>'+
+        '<div class="sumsb">Toque numa linha para ir até ela.</div>'+
+        '<div class="sumparte">1 · O começo</div>';
+  TELAS_INI.forEach(function(t,i){
+    var aqui=(ondeEstou===i), feita=(i<ondeEstou);
+    h+='<button type="button" class="suml'+(aqui?" aqui":"")+'" onclick="irTela(\''+t.id+'\')">'+
+       '<span class="sumn">'+(i+1)+'</span>'+
+       '<span class="sumst">'+(aqui?"🔲":(feita?"✅":"⬜"))+'</span>'+
+       '<span class="sumtx"><b>'+t.emo+' '+t.nome+'</b><span>'+t.diz+'</span></span></button>';
+  });
+  var feitas=0;
+  h+='<div class="sumparte">2 · As 7 perguntas</div>';
+  PERGUNTAS.forEach(function(q,i){
+    var r=resp[q.id], st="⬜", cl="";
+    if(r){
+      feitas++;
+      var a=q.alts.filter(function(x){ return x.L===r })[0];
+      st=(a&&a.c==="gol")?"✅":"❌";
+    }
+    if(tela==="q"&&i===iQ){ st="🔲"; cl=" aqui" }
+    h+='<button type="button" class="suml'+cl+'" onclick="irPergunta('+i+')">'+
+       '<span class="sumn">'+(i+1)+'</span><span class="sumst">'+st+'</span>'+
+       '<span class="sumtx"><b>'+esc(q.de)+'</b><span>'+esc(q.t.slice(0,58))+'…</span></span></button>';
+  });
+  var liberado=(feitas>=PERGUNTAS.length);
+  h+='<button type="button" class="suml'+(liberado?"":" trav")+'" '+
+     (liberado?'onclick="irFim()"':'')+'>'+
+     '<span class="sumst">'+(liberado?"🏁":"🔒")+'</span>'+
+     '<span class="sumtx"><b>Placar</b><span>'+
+     (liberado?"pronto · toque para ver":"abre quando as 7 forem respondidas · "+feitas+" feitas")+
+     '</span></span></button>'+
+     '<button class="fechar" onclick="fecharSumario()">← Voltar</button></div>';
+  var d=document.createElement("div");
+  d.id="sumjan"; d.className="sumjan"; d.innerHTML=h;
+  d.onclick=function(ev){ if(ev.target===d) fecharSumario() };
+  document.body.appendChild(d);
+}
+function fecharSumario(){ var e=$("sumjan"); if(e) e.remove() }
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function irTela_OFF_CLD013(id){ fecharSumario(); tela=id; render() }
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function irPergunta_OFF_CLD013(i){ fecharSumario(); tela="q"; iQ=i; render() }
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function irFim_OFF_CLD013(){ fecharSumario(); tela="fim"; render() }
+
+/* ══════════════════════════════════════════════════════════════════
+   NAVEGACAO
+   ══════════════════════════════════════════════════════════════════ */
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function render_OFF_CLD013(){
+  if(tela==="ident"){ telaIdent(); devolverId() }
+  else if(tela==="texto") telaTexto();
+  else if(tela==="q") telaPerg();
+  else telaFim();
+  /* 🔴 CLD-468 · mesma ordem da tela: turma, numero e nome. Se a linha de cima disser
+     uma ordem e o rodape disser outra, o estudante aprende que a ordem nao importa. */
+  $("eu").textContent = (turma||estudante) ? ([turma, (numero?"nº "+numero:""), estudante]
+      .filter(function(x){return x}).join(" · ")) : "";
+  pintarRodape();
+  pintarTopo();   /* CLD-011 */
+  setTimeout(desenharFaixa,30);
+}
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function pintarRodape_OFF_CLD013(){
+  var v=$("bVolta"), p=$("bProx"), s=$("bSum");
+  s.style.display = (tela==="ident") ? "none" : "";
+  if(tela==="ident"){
+    v.disabled=true; p.textContent="Começar →";
+    p.disabled = !( $("inNome") && $("inNome").value.trim().length>2 && turma );
+  } else if(tela==="texto"){
+    v.disabled=false; p.disabled=false; p.textContent="Ir às perguntas →";
+  } else if(tela==="q"){
+    v.disabled=false;
+    p.disabled = !resp[PERGUNTAS[iQ].id];
+    p.textContent = (iQ===PERGUNTAS.length-1) ? "Ver o placar →" : "Próxima →";
+  } else { v.disabled=false; p.disabled=true; p.textContent="fim" }
+}
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function avancar_OFF_CLD013(){
+  if(tela==="ident"){
+    estudante=$("inNome").value.trim();
+    numero=($("inNum")&&$("inNum").value||"").trim();
+    tela="texto"; if(!T0) T0=Date.now();  /* CLD-011 · o cronômetro do topo começa ao sair da identificação */
+  }
+  else if(tela==="texto"){ tela="q"; iQ=0 }
+  else if(tela==="q"){ if(iQ<PERGUNTAS.length-1) iQ++; else tela="fim" }
+  render();
+}
+/* 🔴 CLD-013 · DESATIVADA, não apagada: o motor novo (roteiro por objetivo) está no fim do script. */
+function voltar_OFF_CLD013(){
+  if(tela==="texto") tela="ident";
+  else if(tela==="q"){ if(iQ>0) iQ--; else tela="texto" }
+  else if(tela==="fim"){ tela="q"; iQ=PERGUNTAS.length-1 }
+  render();
+}
+/* ══════════════════════════════════════════════════════════════════════════
+   🔴 CLD-013 · PADRONIZADOR_002 · O MOTOR NOVO DA PORT · V01.08
+   Marcos, 01/10/2026 06:10–06:25:
+     · as 5 perguntas da prova viram dissertativa em 5 fases (5W2H), mescladas com as objetivas;
+     · fundo por tipo de tela, como na base: verde objetiva · azul V/F · amarelo lacuna (novo)
+       · quase preto dissertativa;
+     · emojis flutuando nas laterais, do ASSUNTO (celular, tela) e da NAV da tela;
+     · na tela da pergunta, o texto PURO (só grifo e glossário · as marcas ficam na tela 2);
+     · ir e voltar à vontade · só não troca a resposta depois de confirmar;
+     · placar parcial por objetivo e placar final.
+   O roteiro: identificação · texto · [objetiva + 5 fases + resposta montada + placar] × 5
+              · [as 2 do gênero + placar] · placar final.
+   ══════════════════════════════════════════════════════════════════════════ */
+var DISC_DE={}; DISC.forEach(function(d){ DISC_DE[d.q]=d });
+var PERG_DE={}; PERGUNTAS.forEach(function(q){ PERG_DE[q.id]=q });
+var NAV_DA_Q={q1:"NAV.07",q2:"NAV.07",q3:"NAV.07",q4:"NAV.07",q5:"NAV.07",q6:"NAV.05",q7:"NAV.05"};
+/* 🔴 CLD-052 · Marcos, 02/10 06:19 e 09:43: o texto entra em CAMADAS, uma por tela, "mostrando tela a tela o
+   que vai sendo adicionado para o estudante não estranhar". Antiga: var R=[{t:"ident"},{t:"texto"}]; */
+var R=[{t:"ident"},{t:"texto",c:1},{t:"texto",c:2},{t:"texto",c:3},{t:"texto",c:4}];
+OBJETIVOS.forEach(function(o,oi){
+  if(o.q){
+    R.push({t:"obj",q:o.q,o:oi});
+    DISC_DE[o.q].fases.forEach(function(f,fi){ R.push({t:"fase",q:o.q,f:fi,o:oi}) });
+    R.push({t:"montada",q:o.q,o:oi});
+  } else o.qs.forEach(function(q){ R.push({t:"obj",q:q,o:oi}) });
+  R.push({t:"parcial",o:oi});
+});
+R.push({t:"final"});
+var iT=0, MAXV=0, RS={}, ULTIMO_OK=true, TXT_ABERTO=true;
+
+/* sorteio fixo por questão: a certa nunca fica sempre no mesmo lugar */
+function hx(s){ var a=2166136261; s=String(s); for(var i=0;i<s.length;i++){ a^=s.charCodeAt(i); a=Math.imul(a,16777619)>>>0 } return a }
+function ordem(n,chave){ var o=[]; for(var i=0;i<n;i++) o.push(i); return o.sort(function(a,b){ return hx(chave+"#"+a)-hx(chave+"#"+b) }) }
+function altsObj(q){ var o=ordem(q.alts.length,"obj_"+q.id), L="ABCDEFG";
+  return o.map(function(k,i){ var a=q.alts[k]; return {L:L[i], t:a.t, c:a.c, rot:a.rot, j:a.j} }) }
+function frasesFase(q,fi){ var f=DISC_DE[q].fases[fi], b=[];
+  f.ok.forEach(function(x){ b.push({t:x[0], ok:true, c:"gol", j:x[1]}) });
+  f.no.forEach(function(x){ b.push({t:x[0], ok:false, c:x[1], j:x[2]}) });
+  var o=ordem(b.length,"fase_"+q+"_"+fi), L="ABCDEFG";
+  return o.map(function(k,i){ var x=b[k]; x.L=L[i]; return x }) }
+function chaveR(r){ return r.t==="obj" ? "obj_"+r.q : (r.t==="fase" ? "fase_"+r.q+"_"+r.f : null) }
+function acertou(r){ var k=chaveR(r), g=RS[k]; if(!g||!g.conf) return null;
+  if(r.t==="obj"){ var a=altsObj(PERG_DE[r.q]).filter(function(x){return x.L===g.sel[0]})[0]; return !!(a&&a.c==="gol") }
+  var fr=frasesFase(r.q,r.f), ok=fr.filter(function(x){return x.ok}).map(function(x){return x.L}).sort().join("");
+  return g.sel.slice().sort().join("")===ok }
+
+/* ── o fundo e os emojis da lateral · copiados da base (m7f-* e m7cena) ── */
+var FUNDO={obj:"m7f-tema", vf:"m7f-vf", lac:"m7f-lac", fase:"m7f-disc", montada:"m7f-disc", parcial:"m7f-placar", final:"m7f-final"};
+function navDaTela(r){ if(r.t==="obj") return NAV_DA_Q[r.q]; if(r.t==="fase") return "NAV.0"+(r.f+1); return null }
+function pintarCena(r){
+  document.body.className=(FUNDO[r.t]||"");
+  var v=document.getElementById("m7cena"); if(v) v.remove();
+  if(r.t==="ident") return;
+  var nv=navDaTela(r), dir=(nv&&NAV_TELA[nv])?NAV_TELA[nv].cena:(r.t==="final"||r.t==="parcial"?["🏆","🥇","📊","⭐","🎉","🏅","✅","🎯"]:CENA_ASSUNTO);
+  var esq=CENA_ASSUNTO, h='<div id="m7cena" class="m7cena" aria-hidden="true" data-tend="'+(ULTIMO_OK?"sobe":"desce")+'">';
+  [["esq",esq],["dir",dir]].forEach(function(c,ci){
+    h+='<div class="m7cl '+c[0]+'">';
+    for(var i=0;i<11;i++){ var e=c[1][i%c[1].length];
+      h+='<span class="m7ce" style="--d:'+(16+(i*5+ci*3)%13)+'s;--a:-'+((i*7+ci*4)%24)+'s;--x:'+((i*29+ci*13)%86+2)+'%">'+e+'</span>' }
+    h+='</div>';
+  });
+  document.body.insertAdjacentHTML("afterbegin", h+'</div>');
+}
+
+/* ── o texto puro na tela da pergunta · só grifo e glossário ── */
+function textoPuro(grifos){
+  var h='<div class="txpuro"><button type="button" class="txbt" onclick="TXT_ABERTO=!TXT_ABERTO;render()">'+
+        '<span class="em20">📄</span> '+(TXT_ABERTO?"esconder o texto":"mostrar o texto")+' · '+esc(TITULO)+'</button>';
+  if(TXT_ABERTO){
+    h+='<div class="txcx">';
+    TEXTO.forEach(function(P,i){
+      var raw=P.p.map(function(x){ return typeof x==="string"?x:(x.m?x.t:"") }).join("");
+      h+='<p><b class="txn">'+(i+1)+'</b> '+marcarTexto(raw, grifos||[])+'</p>';
+    });
+    h+='</div>';
+  }
+  return h+'</div>';
+}
+function pillNav(nv){ var N=NAV_TELA[nv]; return N?'<span class="navpill"><span class="em20">'+N.emo+'</span> '+nv+' · '+N.rot+'</span>':'' }
+
+/* ── objetiva ── */
+function telaObj(r){
+  var q=PERG_DE[r.q], g=RS["obj_"+q.id]||{sel:[],conf:false}, alts=altsObj(q), nO=OBJETIVOS[r.o];
+  var h='<div class="croxo"><div class="cp-cmd"><span class="ctxnum">'+(r.o+1)+'</span>objetivo '+(r.o+1)+' · '+esc(nO.rot)+'</div>'+
+    '<div class="pills">'+pillNav(NAV_DA_Q[q.id])+'<span class="navpill tipo"><span class="em20">▢</span> objetiva · '+esc(q.de)+'</span></div>'+
+    '<div class="qbox"><div class="qlab"><span class="em20">❓</span> PERGUNTA</div><h3>'+marcarTexto(q.t, GRIFO_Q[q.id])+'</h3></div>'+
+    '<div class="conector"><span class="em20">👉</span> Leia as '+NUMERAL[alts.length]+'. <b>Só uma</b> está certa. Marque <b>uma</b> e confirme.</div></div>';
+  h+=textoPuro(GRIFO_Q[q.id]);
+  if(CAM.glq) h+='<div class="glosaviso"><span class="em20">📖</span> As palavras em <b>pastilha azul</b> abrem uma explicação.</div>';
+  h+='<div class="alts">';
+  var cert=alts.filter(function(a){return a.c==="gol"})[0];
+  alts.forEach(function(a){
+    var st=(g.sel.indexOf(a.L)>=0?" sel":"");
+    if(g.conf){ if(a===cert) st+=" certo"; else if(g.sel[0]===a.L) st+=" errado" }
+    h+='<button type="button" class="alt alt2'+st+'"'+(g.conf?'':' onclick="escolher(\''+a.L+'\',1)"')+'>'+
+       '<span class="altl"><span class="altletra">'+a.L+'</span></span><span class="frase">'+marcarTexto(a.t,[])+'</span></button>';
+    if(g.conf) h+=caixaGol(a.c,a.rot,a.j);
+  });
+  h+='</div>'+barraConf(g,1);
+  $("palco").innerHTML=h;
+}
+function caixaGol(c,rot,j){ var C=CLASSES[c]||CLASSES.fora;
+  return '<div class="gol '+C.cl+'"><div class="cab"><span class="tri">'+C.tri+'</span>'+(rot||C.rot)+'</div><div class="j">'+esc(j)+'</div></div>' }
+function barraConf(g,n){
+  if(g.conf) return '<div class="confok"><span class="em20">🔒</span> Resposta confirmada. Você pode voltar aqui para rever, mas não dá para trocar.</div>';
+  return '<div class="confbx"><div class="contasel">Marque '+(n===1?'<b>uma</b>':'as <b>'+NUMERAL[n]+'</b> que estão certas')+' · '+g.sel.length+' de '+n+'</div>'+
+    '<button type="button" id="btConf" class="btconf"'+(g.sel.length===n?'':' disabled')+' onclick="confirmar()">confirmar</button></div>';
+}
+function escolher(L,n){
+  var r=R[iT], k=chaveR(r), g=RS[k]||(RS[k]={sel:[],conf:false}); if(g.conf) return;
+  if(n===1) g.sel=[L];
+  else { var p=g.sel.indexOf(L); if(p>=0) g.sel.splice(p,1); else if(g.sel.length<n) g.sel.push(L) }
+  render();
+}
+function confirmar(){
+  var r=R[iT], g=RS[chaveR(r)]; if(!g) return;
+  var n=(r.t==="obj")?1:3; if(g.sel.length!==n) return;
+  g.conf=true; ULTIMO_OK=!!acertou(r); render();
+}
+
+/* ── fase da dissertativa ── */
+function telaFase(r){
+  var D=DISC_DE[r.q], F=D.fases[r.f], g=RS["fase_"+r.q+"_"+r.f]||{sel:[],conf:false}, fr=frasesFase(r.q,r.f), nv="NAV.0"+(r.f+1);
+  var h='<div class="discab"><span class="em20">📝</span> DISSERTATIVA · você monta a resposta · objetivo '+(r.o+1)+'</div>'+
+    '<div class="croxo"><div class="cp-cmd"><span class="ctxnum">'+(r.f+1)+'</span>parte '+(r.f+1)+' de 5 · '+F.k+'</div>'+
+    '<div class="pills">'+pillNav(nv)+'<span class="navpill tipo">'+DFASE[r.f]+'</span></div>'+
+    '<div class="qbox"><div class="qlab"><span class="em20">📋</span> A PERGUNTA DA PROVA</div><div class="qprova">'+marcarTexto(D.t, GRIFO_Q[r.q])+'</div>'+
+    '<div class="qlab" style="margin-top:10px"><span class="em20">❓</span> PARTE '+(r.f+1)+'</div>'+
+    '<h3><span class="chave">'+F.k+'</span>'+esc(F.p)+'</h3></div>'+
+    '<div class="conector"><span class="em20">👉</span> Leia as cinco. <b>Três</b> estão certas. Marque as <b>três</b> e confirme.</div></div>';
+  h+=textoPuro(GRIFO_Q[r.q]);
+  h+='<div class="alts">';
+  fr.forEach(function(a){
+    var st=(g.sel.indexOf(a.L)>=0?" sel":"");
+    if(g.conf){ st+=a.ok?" certo":(g.sel.indexOf(a.L)>=0?" errado":"") }
+    h+='<button type="button" class="alt alt2'+st+'"'+(g.conf?'':' onclick="escolher(\''+a.L+'\',3)"')+'>'+
+       '<span class="altl"><span class="altletra">'+a.L+'</span></span><span class="frase">'+esc(a.t)+'</span></button>';
+    if(g.conf) h+=caixaGol(a.c,null,a.j);
+  });
+  h+='</div>'+barraConf(g,3);
+  $("palco").innerHTML=h;
+}
+/* ── a resposta montada ── */
+function telaMontada(r){
+  var D=DISC_DE[r.q];
+  var h='<div class="discab"><span class="em20">📝</span> A RESPOSTA MONTADA · objetivo '+(r.o+1)+'</div>'+
+    '<div class="card"><div class="qlab"><span class="em20">📋</span> A PERGUNTA DA PROVA</div><h3 style="margin:4px 0 12px">'+esc(D.t)+'</h3>';
+  D.fases.forEach(function(F,fi){
+    var rr={t:"fase",q:r.q,f:fi}, a=acertou(rr), g=RS[chaveR(rr)];
+    var minhas=g&&g.conf?frasesFase(r.q,fi).filter(function(x){return g.sel.indexOf(x.L)>=0 && x.ok}).map(function(x){return x.t}):[];
+    h+='<div class="cumpre"><span class="em20">'+(a===null?"🔲":(a?"✅":"❌"))+'</span><span><span class="chave">'+F.k+'</span><b>'+esc(F.p)+'</b>'+
+       (minhas.length?'<br>'+minhas.map(esc).join(" · "):(a===null?' · ainda não respondida':''))+'</span></div>';
+  });
+  h+='<div class="modelo"><div class="qlab"><span class="em20">✍️</span> ASSIM A RESPOSTA FICA ESCRITA</div><p>'+esc(D.modelo)+'</p></div>'+
+     '<div class="nota">Na sua folha, escreva a resposta com as <b>suas</b> palavras. As partes acima são o roteiro.</div></div>';
+  $("palco").innerHTML=h;
+}
+/* ── placar parcial e final ── */
+function placarObj(oi){
+  var its=R.filter(function(r){ return r.o===oi && (r.t==="obj"||r.t==="fase") }), pts=0, tot=0, linhas=[];
+  var o=OBJETIVOS[oi];
+  if(o.q){
+    var ro=its.filter(function(r){return r.t==="obj"})[0], ao=acertou(ro);
+    var fs=its.filter(function(r){return r.t==="fase"}), fc=fs.filter(function(r){return acertou(r)}).length;
+    /* 🔴 CLD-072 · Marcos, 02/10 19:48: "na dissertativa a correção ou é 0,50 ou 1,00". A mesma régua da RETOMADA:
+       errou no máximo 1 parte = 1,00 · errou 2 ou mais = 0,50 · não fez nenhuma = 0,00.
+       Antiga (proporcional, desativada): pts=(ao?1:0)+fc/5; tot=2; */
+    var feitas=fs.filter(function(r){ return acertou(r)!==null }).length;
+    var disc=feitas ? ((fs.length-fc)<=1 ? 1 : 0.5) : 0;
+    pts=(ao?1:0)+disc; tot=2;
+    linhas.push([ao,"objetiva · "+NAV_DA_Q[o.q]]);
+    fs.forEach(function(r){ linhas.push([acertou(r),"dissertativa · parte "+(r.f+1)+" · "+DISC_DE[r.q].fases[r.f].k+" · NAV.0"+(r.f+1)]) });
+  } else {
+    its.forEach(function(r){ var a=acertou(r); pts+=a?1:0; tot++; linhas.push([a,"objetiva · "+PERG_DE[r.q].de+" · "+NAV_DA_Q[r.q]]) });
+  }
+  return {pts:pts, tot:tot, linhas:linhas};
+}
+function fmt2(x){ return x.toFixed(2).replace(".",",") }
+function blocoObj(oi){
+  var P=placarObj(oi), o=OBJETIVOS[oi];
+  var h='<div class="bloco bl4"><h2><span class="cnum">'+(oi+1)+'</span>'+esc(o.rot)+' · '+fmt2(P.pts)+' de '+P.tot+'</h2>';
+  P.linhas.forEach(function(l){ h+='<div class="cumpre"><span class="em20">'+(l[0]===null?"🔲":(l[0]?"✅":"❌"))+'</span><span>'+esc(l[1])+'</span></div>' });
+  return h+'</div>';
+}
+function notaFinal(){ var s=0,t=0; OBJETIVOS.forEach(function(o,oi){ var P=placarObj(oi); s+=P.pts; t+=P.tot }); return {s:s,t:t,n:t?10*s/t:0} }
+function telaParcial(r){
+  var h='<div class="card"><h2><span class="em20">📊</span> Placar do objetivo '+(r.o+1)+'</h2>'+
+    '<div class="sub">Você terminou este objetivo. Veja como foi e o que vem depois.</div></div>'+blocoObj(r.o);
+  h+='<div class="card"><h2><span class="em20">🗺️</span> Os objetivos desta recuperação</h2>';
+  OBJETIVOS.forEach(function(o,oi){ var P=placarObj(oi), feito=P.linhas.every(function(l){return l[0]!==null});
+    h+='<div class="cumpre'+(oi===r.o+1?' pulsa':'')+'"><span class="em20">'+(feito?"✅":(oi===r.o+1?"👉":"🔲"))+'</span><span><b>'+(oi+1)+' · '+esc(o.rot)+'</b> · '+fmt2(P.pts)+' de '+P.tot+'</span></div>' });
+  $("palco").innerHTML=h+'</div>';
+}
+function telaFinal(){
+  var N=notaFinal();
+  var h='<div class="card"><h2><span class="em20">🏁</span> Placar final</h2>'+
+    '<div class="nota">Nota: <b>'+fmt2(N.n)+'</b> de 10 · '+fmt2(N.s)+' de '+N.t+' pontos.</div></div>';
+  OBJETIVOS.forEach(function(o,oi){ h+=blocoObj(oi) });
+  $("palco").innerHTML=h;
+}
+
+/* ── navegação · ir e voltar à vontade; avançar a pergunta só depois de confirmar ── */
+function render(){
+  var r=R[iT]; MAXV=Math.max(MAXV,iT);
+  pintarCena(r);
+  if(r.t==="ident"){ telaIdent(); devolverId() }
+  else if(r.t==="texto"){ camadaAplica(r.c); telaTexto() }
+  else if(r.t==="obj") telaObj(r);
+  else if(r.t==="fase") telaFase(r);
+  else if(r.t==="montada") telaMontada(r);
+  else if(r.t==="parcial") telaParcial(r);
+  else telaFinal();
+  $("eu").textContent=[turma,(numero?"nº "+numero:""),estudante].filter(function(x){return x}).join(" · ");
+  pintarRodape(); pintarTopo();
+  setTimeout(desenharFaixa,30);
+  try{ window.scrollTo(0,0) }catch(e){}
+}
+function pintarRodape(){
+  var r=R[iT], v=$("bVolta"), p=$("bProx"), s=$("bSum");
+  s.style.display=(r.t==="ident")?"none":"";
+  v.disabled=(iT===0);
+  if(r.t==="ident"){ p.textContent="Começar →"; p.disabled=!($("inNome")&&$("inNome").value.trim().length>2&&turma&&$("inNum")&&$("inNum").value) ; return }
+  if(r.t==="final"){ p.textContent="fim"; p.disabled=true; return }
+  var k=chaveR(r); p.textContent="Próximo →"; p.disabled=!!(k && !(RS[k]&&RS[k].conf));
+}
+function pintarTopo(){
+  try{
+    var r=R[iT], N=notaFinal(), et={ident:"identificação",texto:"leitura do texto",obj:"objetiva",fase:"dissertativa",montada:"resposta montada",parcial:"placar parcial",final:"placar final"}[r.t];
+    if(r.o!=null) et="objetivo "+(r.o+1)+" · "+et;
+    if(r.t==="texto" && r.c) et="leitura do texto · camada "+r.c+" de 4";
+    $("stVer").textContent=VER;
+    $("stNome").textContent="Estudante: "+(estudante?("nº "+(numero||"—")+" · "+estudante):"—");
+    $("stTurma").textContent="Turma: "+(turma||"—");
+    /* CLD-073 · Marcos, 20:20: "não estamos mais usando tela X de Y, apenas tela X".
+       Antes: $("stTela").textContent="Tela "+(iT+1)+" de "+R.length; */
+    $("stTela").textContent="Tela "+(iT+1);
+    $("stEtapa").textContent=et;
+    $("stNota").innerHTML='<span class="em20">✔</span> '+fmt2(N.s)+' de '+N.t+' · nota '+fmt2(N.n);
+  }catch(e){}
+}
+function avancar(){
+  var r=R[iT];
+  if(r.t==="ident"){ estudante=$("inNome").value.trim(); numero=($("inNum")&&$("inNum").value||"").trim(); if(!T0) T0=Date.now() }
+  if(iT<R.length-1) iT++; render();
+}
+function voltar(){ if(iT>0) iT--; render() }
+function irPara(i){ fecharSumario(); if(i<=MAXV || i===1){ iT=i; render() } }
+/* ── sumário em dois níveis: o objetivo e as telas dele · o objetivo onde você está nasce aberto ── */
+var SUM_ABERTO={};
+function abrirSumario(){
+  fecharSumario();
+  var at=R[iT], h='<div class="sumcx"><div class="sumtt">☰ Sumário</div><div class="sumsb">Toque numa linha para ir até ela. As telas à frente abrem conforme você avança.</div>';
+  function linha(r,i){
+    var k=chaveR(r), a=k?acertou(r):null, aqui=(i===iT), trav=(i>MAXV && i!==1);
+    var st=aqui?"🔲":(trav?"🔒":(a===null?(i<MAXV?"✅":"⬜"):(a?"✅":"❌")));
+    var nome={ident:"Quem é você",texto:"O texto, com as marcas",obj:"Objetiva",fase:"Parte",montada:"A resposta montada",parcial:"Placar do objetivo",final:"Placar final"}[r.t];
+    if(r.t==="fase") nome="Parte "+(r.f+1)+" · "+DISC_DE[r.q].fases[r.f].k+" · NAV.0"+(r.f+1);
+    if(r.t==="obj") nome="Objetiva · "+PERG_DE[r.q].de+" · "+NAV_DA_Q[r.q];
+    if(r.t==="texto" && r.c) nome="O texto · camada "+r.c+" de 4 · "+CAMADAS[r.c].tt.split(" · ")[1];
+    return '<button type="button" class="suml'+(aqui?" aqui":"")+(trav?" trav":"")+'" '+(trav?'':'onclick="irPara('+i+')"')+'>'+
+      '<span class="sumn">'+(i+1)+'</span><span class="sumst">'+st+'</span><span class="sumtx"><b>'+nome+'</b></span></button>';
+  }
+  /* 🔴 CLD-052 · as 4 camadas do texto. Antiga: h+='<div class="sumparte">O começo</div>'+linha(R[0],0)+linha(R[1],1); */
+  h+='<div class="sumparte">O começo</div>'+linha(R[0],0);
+  R.forEach(function(r,i){ if(r.t==="texto") h+=linha(r,i) });
+  OBJETIVOS.forEach(function(o,oi){
+    var aberto=(SUM_ABERTO[oi]!=null)?SUM_ABERTO[oi]:(at.o===oi);
+    h+='<button type="button" class="sumparte sumob" onclick="SUM_ABERTO['+oi+']='+(!aberto)+';abrirSumario()">'+(aberto?"▾ ":"▸ ")+'Objetivo '+(oi+1)+' · '+esc(o.rot)+'</button>';
+    if(aberto) R.forEach(function(r,i){ if(r.o===oi) h+=linha(r,i) });
+  });
+  h+='<div class="sumparte">O fim</div>'+linha(R[R.length-1],R.length-1)+'<button class="fechar" onclick="fecharSumario()">← Voltar</button></div>';
+  var d=document.createElement("div"); d.id="sumjan"; d.className="sumjan"; d.innerHTML=h;
+  d.onclick=function(ev){ if(ev.target===d) fecharSumario() };
+  document.body.appendChild(d);
+}
+
+/* 🔴 CLD-072 · Marcos, 02/10 19:48: "tem glossário em todas as telas, principalmente se cada
+   tela tiver uma palavra que na tela anterior não estava no glossário".
+   MEDIDO na V01.12: 12 das 48 telas tinham palavra do GLOS sem a pastilha (as 4 camadas do
+   texto, nos cards de explicação, e as telas da resposta montada e do placar parcial).
+   Agora, depois de cada render, a 1ª vez que cada palavra do GLOS aparece na tela vira
+   pastilha. Não entra em botão, campo, janela, pastilha que já existe. Dentro da marca (camada 3) entra. */
+function glosAuto(){
+  try{
+    var pal=$("palco"); if(!pal) return 0;
+    var ja={}; pal.querySelectorAll(".tchip").forEach(function(c){ ja[c.textContent.toLowerCase().trim()]=1 });
+    var termos=Object.keys(GLOS).sort(function(a,b){ return b.length-a.length }), n=0;
+    termos.forEach(function(t){
+      var tl=t.toLowerCase(); if(Object.keys(ja).some(function(k){ return k.indexOf(tl)>=0 })) return;
+      var rx=new RegExp("(^|[^A-Za-zÀ-ÿ])("+t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")(?=[^A-Za-zÀ-ÿ]|$)","i");
+      var w=document.createTreeWalker(pal, NodeFilter.SHOW_TEXT, {acceptNode:function(nd){
+        var e=nd.parentElement; if(!e) return NodeFilter.FILTER_REJECT;
+        if(e.closest(".tchip,button,input,textarea,select,.jan,script,style,#bProx")) return NodeFilter.FILTER_REJECT;
+        return rx.test(nd.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP }});
+      var nd=w.nextNode(); if(!nd) return;
+      var m=rx.exec(nd.nodeValue), ini=m.index+m[1].length, fim=ini+m[2].length;
+      var meio=nd.splitText(ini); meio.splitText(fim-ini);
+      var sp=document.createElement("span"); sp.className="tchip"+(GLOS_LIDO[t]?" lido":"");
+      sp.setAttribute("role","button"); sp.setAttribute("tabindex","0");
+      sp.onclick=function(ev){ ev.stopPropagation(); abrirGlos(t) };
+      sp.textContent=meio.nodeValue; meio.parentNode.replaceChild(sp, meio);
+      ja[tl]=1; n++;
+    });
+    return n;
+  }catch(e){ return 0 }
+}
+/* 🔴 CLD-073 · tela cheia e o contador de saídas (o mesmo jeito da RETOMADA: conta quando sai da tela cheia
+   depois que a identificação terminou, e avisa com a janela). */
+var SAIDAS_TC=0;
+function pedirTelaCheia(){ var e=document.documentElement; if(e.requestFullscreen) e.requestFullscreen().catch(function(){}) }
+function contaSaida(){
+  SAIDAS_TC++; $("stSaidas").innerHTML='<span class="em20">👁️</span> Saídas: '+SAIDAS_TC;
+  janela('<div class="jantt"><span class="e">👁️</span>Você saiu da tela cheia</div>'+
+         '<div class="janl"><span class="e">🔢</span><span>Saídas até agora: <b>'+SAIDAS_TC+'</b>. O professor vê este número.</span></div>'+
+         '<div class="janl"><span class="e">🖥️</span><span><b>Clique</b> em Tela cheia, no alto da tela, para voltar.</span></div>');
+}
+document.addEventListener("fullscreenchange", function(){ if(!document.fullscreenElement && T0) contaSaida() });
+var render_V0113=render;
+render=function(){ var v=render_V0113.apply(this, arguments); glosAuto(); return v };
+
+window.addEventListener("resize", function(){ setTimeout(desenharFaixa,60) });
+$("vver").textContent=VER+" · "+CLD;
+render();
+</script>
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   port_c150.js · PADRONIZADOR_002 · CLD-150 · 04/10/2026 · RECUP-PORT V01.15
+   Marcos, 04/10 16:26: "produza o máximo possível" das pendências que não dependem dele.
+   ① R.30 · 1 frase por linha em todas as telas. Exceção da própria R.30.11: o texto do artigo
+      (.par .tx), que já está em cards por parágrafo, fica como está.
+   ② "Leia as quatro" → "Leia as 04" (num_cmd.js, o mesmo da RETOMADA e do ETEC).
+   Copiado do etec_c149.js (CLD-149). Nada é apagado: render_V0114 guarda o render antigo.
+   ══════════════════════════════════════════════════════════════════════════ */
+/* ---------- ① R.30 · as frases, uma por linha ---------- */
+var ETEC_ABREV = /(^|\s)(Sr|Sra|Srs|Dr|Dra|Prof|Profa|nº|n|p|pág|págs|ex|aprox|cap|vol|fig|séc|av|tel|obs)\.$/i;
+var ETEC_VOID = /^<(br|img|input|hr|wbr|meta|source)\b/i;
+function etecFrases(html){
+  var partes = String(html||"").split(/(<[^>]*>)/), fundo = 0, cur = "", out = [];
+  for(var i=0;i<partes.length;i++){
+    var p = partes[i];
+    if(!p) continue;
+    if(p.charAt(0)==="<"){
+      if(/^<\//.test(p)) fundo = Math.max(0, fundo-1);
+      else if(!ETEC_VOID.test(p) && !/\/>$/.test(p)) fundo++;
+      cur += p; continue;
+    }
+    if(fundo>0){ cur += p; continue }
+    /* corta depois de . ! ? … quando a próxima palavra começa com maiúscula, número ou aspas */
+    var rx = /([.!?…]+["”’»)]*)(\s+)(?=[A-ZÁÉÍÓÚÂÊÔÃÕÀÇ0-9"“«(—–])/g, ult = 0, m;
+    while((m = rx.exec(p))){
+      var ate = m.index + m[1].length, pedaco = cur + p.slice(ult, ate);
+      if(ETEC_ABREV.test(p.slice(Math.max(0,m.index-6), ate))){ continue }
+      out.push(pedaco); cur = ""; ult = ate + m[2].length;
+    }
+    /* a frase acaba no fim deste pedaço e a próxima começa depois de uma tag ("cinco. <b>Só uma</b>") */
+    var resto = p.slice(ult), fim = /([.!?…]+["”’»)]*)(\s*)$/.exec(resto);
+    if(fim){
+      var prox = "";
+      var temQuebra = !!fim[2];
+      for(var j=i+1;j<partes.length;j++){ if(!partes[j]) continue; if(partes[j].charAt(0)!=="<"){ prox = partes[j]; break } if(/^<(br|\/p|p|\/div|div)\b/i.test(partes[j])) temQuebra = true }
+      if(temQuebra && /^\s*[A-ZÁÉÍÓÚÂÊÔÃÕÀÇ0-9"“«(—–]/.test(prox) && !ETEC_ABREV.test(resto.slice(0, fim.index+fim[1].length).slice(-8))){
+        out.push(cur + resto.slice(0, fim.index+fim[1].length)); cur = ""; continue;
+      }
+    }
+    cur += resto;
+  }
+  if(cur.replace(/<[^>]*>/g,"").trim()) out.push(cur); else if(out.length) out[out.length-1] += cur;
+  return out;
+}
+function etecLinhas(el){
+  if(!el || el.dataset.etln) return 0;
+  /* referência bibliográfica ("HARARI, Yuval Noah. Sapiens…") não é frase: fica inteira */
+  if(/^\s*(\d+\s*)?[A-ZÁÉÍÓÚÂÊÔÃÕÀÇ]{2,}[A-ZÁÉÍÓÚÂÊÔÃÕÀÇ \-]*,\s/.test(el.textContent)){ el.dataset.etln="ref"; el.classList.add("etref"); return 1 }
+  var F = etecFrases(el.innerHTML);
+  el.dataset.etln = String(F.length);
+  if(F.length < 2) return F.length;
+  el.innerHTML = F.map(function(f){ return '<span class="etln">'+f.trim().replace(/^(\s*<br\s*\/?>\s*)+|(\s*<br\s*\/?>\s*)+$/gi,"")+'</span>' }).join("");
+  return F.length;
+}
+
+
+var PORT_FORA = ".par .tx, .txpuro, #statusbar, #idbar, textarea, input, select, script, style, svg, .jantt";
+function portR30(){
+  var pal=document.getElementById("palco"); if(!pal) return 0;
+  var n=0, todos=[pal].concat([].slice.call(pal.querySelectorAll("*")));
+  todos.forEach(function(e){
+    if(e.dataset && e.dataset.etln) return;
+    if(e.closest && e.closest(PORT_FORA)) return;
+    var cs=getComputedStyle(e); if(cs.display==="none" || cs.display.indexOf("inline")===0) return;
+    /* só o bloco "folha": todos os filhos são inline (senão partir o HTML desmancharia a estrutura) */
+    for(var i=0;i<e.children.length;i++){ var d=getComputedStyle(e.children[i]).display; if(d.indexOf("inline")!==0 && d!=="none") return }
+    if(!/[.!?…]["”’»)]*\s+[A-ZÁÉÍÓÚÂÊÔÃÕÀÇ0-9"“«(]/.test(e.textContent)) return;
+    if(etecLinhas(e)>1) n++;
+  });
+  return n;
+}
+try{ window.portR30=portR30 }catch(e){}
+var render_V0114 = render;
+render = function(){
+  var v = render_V0114.apply(this, arguments);
+  try{ portR30() }catch(e){}
+  return v;
+};
+try{ window.render = render }catch(e){}
+
+/* cópia de cld031.py (RETOMADA) · CLD-031 · gerada pelo PADRONIZADOR_002 */
+
+/* ══════════════════════════════════════════════════════════════════════════
+   🔴 CLD-031 · o número do comando sai com dois dígitos, em negrito e grifado
+   ("Escolha três" → "Escolha 03"). Passa depois de cada desenho de tela.
+   ══════════════════════════════════════════════════════════════════════════ */
+(function(){
+  var N={"um":1,"uma":1,"dois":2,"duas":2,"três":3,"tres":3,"quatro":4,"cinco":5,"seis":6,"sete":7,"oito":8,"nove":9,"dez":10};
+  var V="Escolha|Escolher|Escolham|Marque|Marcar|Marquem|Selecione|Leia|Ler|Toque em|Responda|Encontre|Ache|Junte|Escreva|Digite|Monte|Liste|Cite|Arraste|Pinte|Copie|Confira|Só|Apenas";
+  var NW="uma|um|duas|dois|três|tres|quatro|cinco|seis|sete|oito|nove|dez";
+  /* verbo + (artigo)? + número  ·  número + "certas"/"estão certas"/"corretas" */
+  var RX=new RegExp("(^|[^A-Za-zÀ-ÿ])((?:"+V+")\\s+(?:(?:as|os|a|o|só|apenas|mais)\\s+)?)("+NW+")(?=([^A-Za-zÀ-ÿ]|$))(\\s*[A-Za-zÀ-ÿ]*)","gi");
+  var RX2=new RegExp("(^|[^A-Za-zÀ-ÿ])("+NW+")(\\s+(?:estão\\s+certas|estão\\s+corretas|certas|corretas)\\b)","gi");
+  var UMOK=/^\s*(e|das|dos|de|delas|deles|só|alternativa|alternativas|frase|frases|opção|opções|resposta|card|cards|missão)?$/i;
+  function dois(w){ var n=N[String(w).toLowerCase()]; return n==null?null:(n<10?"0"+n:String(n)) }
+  function trocaTexto(t){
+    var mudou=false;
+    var r=t.replace(RX,function(m,a,b,w,lk,prox){
+      var lw=w.toLowerCase();
+      if((lw==="um"||lw==="uma") && !/^(só|apenas)/i.test(b) && !UMOK.test(prox||"")) return m;   /* "um tom", "uma célula": artigo · depois de "Só" é sempre quantidade */
+      var d=dois(w); if(!d) return m; mudou=true;
+      return a+b+"\u0001"+d+"\u0002"+(prox||"");
+    });
+    r=r.replace(RX2,function(m,a,w,c){
+      if(/\u0001/.test(m)) return m;
+      var d=dois(w); if(!d) return m; mudou=true;
+      return a+"\u0001"+d+"\u0002"+c;
+    });
+    return mudou?r:null;
+  }
+  var PULA={SCRIPT:1,STYLE:1,TEXTAREA:1,INPUT:1,CODE:1,PRE:1,SELECT:1,OPTION:1};
+  /* o verbo e o número podem estar em pedaços diferentes ("Marque as <b>duas</b>"): o vizinho conta */
+  /* o verbo pode vir sozinho num pedaço ("<b>Arraste</b> os três") ou já com o artigo ("Marque as <b>duas</b>") */
+  var RXV=new RegExp("(?:^|[^A-Za-zÀ-ÿ])(?:"+V+")(?:\\s+(?:as|os|a|o|só|apenas|mais))?\\s*$","i");
+  var RXL=new RegExp("^(\\s*(?:(?:as|os|a|o|só|apenas|mais)\\s+)?)("+NW+")(?=([^A-Za-zÀ-ÿ]|$))(\\s*[A-Za-zÀ-ÿ]*)","i");
+  var RXF=new RegExp("(^|[^A-Za-zÀ-ÿ])("+NW+")(\\s*)$","i");
+  var RXC=/^\s+(estão\s+certas|estão\s+corretas|certas|corretas)\b/i;
+  /* 🔴 CLD-031 · a DICA fixa do porta.py dizia "Leia as quatro alternativas antes de marcar. Só uma
+     está certa." também na questão que a tela mostra como 5 frases e 2 certas (o quarteto):
+     medido no 8º, tela 27, a dica contradizia a frase do lado. Agora ela segue a questão. */
+  var NUMX=["","uma","duas","três","quatro","cinco","seis"];
+  var DICA_VELHA="Leia as quatro alternativas antes de marcar. Só uma está certa.";
+  function m7DicaQuantas(){
+    try{
+      if(typeof parAtual==="undefined" || !parAtual || !parAtual.quarteto || !parAtual.alts) return;
+      var n=parAtual.alts.length, c=(typeof quantasCertas==="function")?quantasCertas():2;
+      var nova="Leia as "+(NUMX[n]||n)+" frases antes de marcar. "+((NUMX[c]||String(c)).replace(/^./,function(x){return x.toUpperCase()}))+" estão certas.";
+      var pal=document.getElementById("palco"); if(!pal) return;
+      var w=document.createTreeWalker(pal,NodeFilter.SHOW_TEXT,null), k;
+      while((k=w.nextNode())){ if(k.nodeValue.indexOf(DICA_VELHA)>=0) k.nodeValue=k.nodeValue.replace(DICA_VELHA,nova) }
+    }catch(e){}
+  }
+  window.m7DicaQuantas=m7DicaQuantas;
+  function m7NumCmd(raiz){
+    try{
+      try{ m7DicaQuantas() }catch(e){}
+      raiz=raiz||document.body; if(!raiz) return 0;
+      var w=document.createTreeWalker(raiz,NodeFilter.SHOW_TEXT,null), T=[], n;
+      while((n=w.nextNode())){
+        var p=n.parentElement; if(!p) continue;
+        if(PULA[p.tagName] || p.closest("#statusbar,#idbar,[contenteditable],.cel,.fc-cel,code,pre")) continue;
+        T.push(n);
+      }
+      var L=[];
+      T.forEach(function(n,k){
+        if(n.parentElement.closest(".m7n")) return;
+        var t=n.nodeValue; if(!/[A-Za-zÀ-ÿ]/.test(t)) return;
+        var r=trocaTexto(t), base=(r==null)?t:r, mudou=(r!=null);
+        var ant=k>0?T[k-1].nodeValue.slice(-40):"", dep=k<T.length-1?T[k+1].nodeValue.slice(0,24):"";
+        /* número no começo deste pedaço, verbo no fim do anterior */
+        if(RXV.test(ant)){
+          base=base.replace(RXL,function(m,sp,wd,lk,prox){
+            var lw=wd.toLowerCase(), pr=(prox||"");
+            if((lw==="um"||lw==="uma") && !/(só|apenas)\s*$/i.test(ant) && !UMOK.test(pr.trim()?pr:(dep.match(/^\s*[A-Za-zÀ-ÿ]*/)||[""])[0])) return m;
+            var d=dois(wd); if(!d) return m; mudou=true; return sp+"\u0001"+d+"\u0002"+pr });
+        }
+        /* número no fim deste pedaço, "certas" no começo do seguinte */
+        if(RXC.test(dep)){
+          base=base.replace(RXF,function(m,a,wd,sp){ var d=dois(wd); if(!d) return m; mudou=true; return a+"\u0001"+d+"\u0002"+sp });
+        }
+        if(mudou) L.push([n,base]);
+      });
+      L.forEach(function(x){
+        var frag=document.createDocumentFragment();
+        x[1].split(/(\u0001\d+\u0002)/).forEach(function(s){
+          if(!s) return;
+          var m=s.match(/^\u0001(\d+)\u0002$/);
+          if(m){ var b=document.createElement("b"); b.className="m7n"; b.textContent=m[1]; frag.appendChild(b) }
+          else frag.appendChild(document.createTextNode(s));
+        });
+        if(x[0].parentNode) x[0].parentNode.replaceChild(frag,x[0]);
+      });
+      return L.length;
+    }catch(e){ return 0 }
+  }
+  window.m7NumCmd=m7NumCmd; window.m7NumCmdTexto=function(t){ var r=trocaTexto(t); return r==null?t:r.replace(/\u0001(\d+)\u0002/g,"[$1]") };
+  var agendado=false;
+  function agenda(){ if(agendado) return; agendado=true;
+    (window.requestAnimationFrame||setTimeout)(function(){ agendado=false; m7NumCmd(document.body) }) }
+  try{ new MutationObserver(function(){ agenda() }).observe(document.documentElement,{childList:true,subtree:true,characterData:true}) }catch(e){}
+  try{ document.addEventListener("DOMContentLoaded", agenda) }catch(e){}
+  agenda();
+})();
+
+/* 🔴 CLD-157 · sumário no desenho da RETOMADA · abrirSumario_V0115 guarda o de antes */
+var abrirSumario_V0115 = abrirSumario;
+abrirSumario = function(){
+  var v = abrirSumario_V0115.apply(this, arguments);
+  try{
+    var cx = document.querySelector("#sumjan .sumcx"); if(!cx) return v;
+    var sb = cx.querySelector(".sumsb");
+    if(sb && !sb.dataset.c157){
+      sb.dataset.c157 = "1";
+      sb.innerHTML = '<span class="etln">Você está na tela <b>'+(iT+1)+'</b> de <b>'+R.length+'</b>.</span>'+
+                     '<span class="etln">Toque numa linha para ir até ela.</span>'+
+                     '<span class="etln">As telas à frente abrem conforme você avança.</span>';
+    }
+    cx.querySelectorAll(".sumparte").forEach(function(p){
+      if(p.dataset.c157) return; p.dataset.c157 = "1";
+      var t = p.textContent.trim(), aberto = /^▾/.test(t), ob = p.classList.contains("sumob");
+      t = t.replace(/^[▸▾]\s*/, "");
+      var em = /^O começo/.test(t) ? "🚪" : (/^O fim/.test(t) ? "🏁" : (ob ? "🎯" : "📄"));
+      p.innerHTML = (ob ? '<span class="sseta">'+(aberto?"▼":"▶")+'</span>' : '') + '<span class="sem">'+em+'</span><span>'+t+'</span>';
+      if(ob && aberto) p.classList.add("ab");
+    });
+  }catch(e){}
+  return v;
+};
+try{ window.abrirSumario = abrirSumario }catch(e){}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   🔴 CLD-228 · O "👨‍🏫 sair" VERMELHO NO TOPO, IGUAL AO DA REVISÃO SAAIB (V02.18).
+   Marcos, 05/10 13:12: "gerar novamente a versão ETEC, se tiver atualização que dê para
+   adaptar, assim como você está melhorando a revisão SAAIB".
+   Aqui não há tela de escolha: o "sair" volta ao COMEÇO, a 1ª tela depois da identificação.
+   Clicou: fecha a janela aberta (sumário, marca, gênero) e volta ao começo.
+   As respostas ficam guardadas enquanto o arquivo estiver aberto.
+   Não aparece na identificação, nem no começo quando não há janela aberta.
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function(){
+  var JAN=["sumjan","janela"];
+  function inicio(){ try{ for(var i=0;i<R.length;i++){ if(R[i].t!=="ident") return i } }catch(e){} return 1 }
+  function aberta(){ return JAN.some(function(id){ return document.getElementById(id) }) }
+  function pode(){
+    try{ if(typeof R==="undefined" || R[iT].t==="ident") return false;
+         if(iT===inicio()) return aberta(); return true }catch(e){ return false }
+  }
+  function mostra(){
+    try{
+      var b=document.getElementById("m7sair4");
+      if(!b){ b=document.createElement("button"); b.type="button"; b.id="m7sair4"; b.className="m7profsai";
+        b.innerHTML='<span class="em">👨‍🏫</span><span class="tx">sair</span><span class="tx2">começo</span>';
+        b.title="sair daqui e voltar ao começo · as suas respostas ficam guardadas";
+        b.onclick=function(ev){ ev.stopPropagation(); ev.preventDefault(); window.m7Sair4() };
+        document.body.appendChild(b) }
+      var v=pode(); if(b.style.display!==(v?"":"none")) b.style.display=v?"":"none";
+      document.body.classList.toggle("m7comsair4", v);
+    }catch(e){}
+  }
+  window.m7Sair4=function(){
+    JAN.forEach(function(id){ var e=document.getElementById(id); if(e) e.remove() });
+    /* a recuperação não grava no navegador: as respostas ficam na memória enquanto o arquivo estiver aberto */
+    try{ var k=inicio(); if(iT!==k){ iT=k; render() } }catch(e){}
+    mostra();
+  };
+  window.addEventListener("load", function(){ mostra(); setInterval(mostra, 400) });
+})();
+
+</script>
+</body>
+</html>
